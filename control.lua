@@ -1,7 +1,5 @@
 require("gui/startup")
 
-local inventory_storage = {}
-
 function chart_starting_area(surface)
   local r = storage.chart_distance or 200
   local force = game.forces.player
@@ -37,7 +35,7 @@ function start_on(planet, player)
 
   local character = surface.create_entity({name = "character", position = position or {0, 0}, force = force})
   player.set_controller({type = defines.controllers.character, character = character})
-  for _, item in pairs(inventory_storage[player.index]) do
+  for _, item in pairs(storage.inventories[player.index]) do
     player.get_inventory(item.inventory).insert(item.item)
   end
 end
@@ -144,7 +142,8 @@ function player_created(e)
   local player = game.players[e.player_index]
   local character = player.character
   local items = collect_items_from(player)
-  inventory_storage[player.index] = items
+  storage.inventories = storage.inventories or {}
+  storage.inventories[player.index] = items
 
   if character then character.destroy() end
 

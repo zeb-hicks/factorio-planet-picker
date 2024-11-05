@@ -14,5 +14,5 @@
   "Lua.workspace.userThirdParty": [
     "/home/nimph/.config/Code/User/workspaceStorage/50d2f2bc097b8d51dcfd7bdf1a7072f3/justarandomgeek.factoriomod-debug/sumneko-3rd"
   ],
-  "Lua.workspace.checkThirdParty": "ApplyInMemory"
+  "Lua.workspace.checkThirdParty": "ApplyInMemory",
 }

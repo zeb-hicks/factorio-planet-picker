@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 2024-11-06
+  Changes:
+    - Altered technology progression to allow for players to start with nothing on Fulgora and Vulcanus
+    - Mining Fulgoran lightning attractors will sometimes yield substations and vary rarely a lighting rod
+    - Mining larger Fulgoran ruins will sometimes yield accumulators
+    - Mining Vulcanus huge rocks will unlock a new recipe chain for steel production
+    - Added a new structure for generating power on Vulcanus using the sulfuric acid vents
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 2024-11-05
+  Features:
+    - Players can choose starting planet
+    - Added planet selection UI, force, void, etc.

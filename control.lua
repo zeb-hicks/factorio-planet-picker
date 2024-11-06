@@ -68,10 +68,6 @@ function init()
   game.forces.player.set_surface_hidden(game.planets.fulgora.surface, false)
   game.forces.player.set_surface_hidden(game.planets.vulcanus.surface, false)
 
-  -- game.forces.player.unlock_space_location("gleba")
-  -- game.forces.player.unlock_space_location("fulgora")
-  -- game.forces.player.unlock_space_location("vulcanus")
-
   game.forces.player.technologies["planet-discovery-gleba"].researched = true
   game.forces.player.technologies["planet-discovery-fulgora"].researched = true
   game.forces.player.technologies["planet-discovery-vulcanus"].researched = true
@@ -160,3 +156,29 @@ script.on_event(defines.events.on_game_created_from_scenario, init)
 -- script.on_init(init)
 script.on_event(defines.events.on_player_created, player_created)
 script.on_event(defines.events.on_gui_click, gui_click)
+
+function on_built(e)
+  local entity = e.entity
+  if entity.name == "thermal-vent" then
+    log("Thermal vent built")
+    entity.surface.create_entity({name = "thermal-vent-generator", position = entity.position})
+  end
+end
+
+script.on_event(defines.events.on_built_entity, on_built)
+script.on_event(defines.events.on_robot_built_entity, on_built)
+script.on_event(defines.events.script_raised_built, on_built)
+
+function on_destroyed(e)
+  local entity = e.entity
+  if entity.name == "thermal-vent" then
+    log("Thermal vent destroyed")
+    local generator = entity.surface.find_entity("thermal-vent-generator", entity.position)
+    if generator then generator.destroy() end
+  end
+end
+
+script.on_event(defines.events.on_player_mined_entity, on_destroyed)
+script.on_event(defines.events.on_entity_died, on_destroyed)
+script.on_event(defines.events.on_robot_mined_entity, on_destroyed)
+script.on_event(defines.events.script_raised_destroy, on_destroyed)

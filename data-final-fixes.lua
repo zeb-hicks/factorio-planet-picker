@@ -12,6 +12,7 @@ strip_dependants("planet-discovery-fulgora")
 strip_dependants("planet-discovery-vulcanus")
 
 data.raw["technology"]["calcite-processing"].prerequisites = { "fluid-handling" }
+remove_dependency("fluid-handling", "oil-gathering")
 
 -- Add pumpjack to fluid handling technology
 table.insert(data.raw["technology"]["fluid-handling"].effects, {type = "unlock-recipe", recipe = "pumpjack" })

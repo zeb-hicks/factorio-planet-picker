@@ -57,6 +57,23 @@ function remove_recipes(recipes)
   end
 end
 
+function find_in(table, key)
+  for k, v in pairs(table) do
+    if v == key then
+      return k
+    end
+  end
+  return nil
+end
+
+function remove_dependency(tech, dependency)
+  local tech = data.raw.technology[tech]
+  local index = find_in(tech.prerequisites, dependency)
+  if index then
+    table.remove(tech.prerequisites, index)
+  end
+end
+
 ---Removes a technology from the tree, joining the dangling tree edges.
 ---@param name string
 function extricate_technology(name)

@@ -30,5 +30,13 @@ data.extend({
     size = 512,
     scale = 1.0,
     priority = "high",
+  },
+  {
+    type = "sprite",
+    name = "aquilo",
+    filename = "__planet-picker__/graphics/icons/aquilo.png",
+    size = 512,
+    scale = 1.0,
+    priority = "high",
   }
 })

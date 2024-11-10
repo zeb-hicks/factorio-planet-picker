@@ -11,8 +11,8 @@ data.extend({
     }},
     order = "a[smelting]-c[steel-plate-sintering]",
     subgroup = "raw-material",
-    pick_sound = item_sounds.landfill_inventory_pickup,
-    drop_sound = item_sounds.landfill_inventory_move,
+    pick_sound = item_sounds and item_sounds.landfill_inventory_pickup,
+    drop_sound = item_sounds and item_sounds.landfill_inventory_move,
     stack_size = 200,
     weight = 1000,
     random_tint_color = item_tints.iron_rust

@@ -1,26 +1,11 @@
 require("gui/planet-select")
 require("script/startup")
 require("script/planet-select")
+require("script/thermal-vent")
 
 function init()
-  game.create_force("picking_planet")
-  create_empty_void()
-  game.forces.player.set_surface_hidden(game.surfaces.empty_void, true)
-  game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
-  game.forces.picking_planet.set_surface_hidden(game.surfaces.empty_void, true)
-  game.forces.picking_planet.set_surface_hidden(game.surfaces.nauvis, true)
-  game.forces.picking_planet.disable_research()
-  game.forces.picking_planet.disable_all_prototypes()
-
-  game.planets.gleba.create_surface()
-  game.planets.fulgora.create_surface()
-  game.planets.vulcanus.create_surface()
-  game.planets.aquilo.create_surface()
-
-  game.surfaces.gleba.request_to_generate_chunks({0, 0}, 8)
-  game.surfaces.fulgora.request_to_generate_chunks({0, 0}, 8)
-  game.surfaces.vulcanus.request_to_generate_chunks({0, 0}, 8)
-  game.surfaces.aquilo.request_to_generate_chunks({0, 0}, 8)
+  setup_force()
+  setup_planets()
 
   if remote.interfaces["freeplay"] then
     remote.call("freeplay", "set_disable_crashsite", true)
@@ -28,11 +13,6 @@ function init()
     remote.call("freeplay", "set_ship_items", {})
     remote.call("freeplay", "set_debris_items", {})
   end
-
-  chart_starting_area(game.planets.gleba.surface)
-  chart_starting_area(game.planets.fulgora.surface)
-  chart_starting_area(game.planets.vulcanus.surface)
-  chart_starting_area(game.planets.aquilo.surface)
 end
 
 ---@param player LuaPlayer

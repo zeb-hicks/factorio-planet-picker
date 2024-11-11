@@ -6,10 +6,6 @@ function entity_built(e)
   end
 end
 
-script.on_event(defines.events.on_built_entity, entity_built)
-script.on_event(defines.events.on_robot_built_entity, entity_built)
-script.on_event(defines.events.script_raised_built, entity_built)
-
 function entity_destroyed(e)
   local entity = e.entity
   if entity.name == "thermal-vent" then
@@ -24,7 +20,15 @@ function entity_destroyed(e)
   end
 end
 
-script.on_event(defines.events.on_player_mined_entity, entity_destroyed)
-script.on_event(defines.events.on_entity_died, entity_destroyed)
-script.on_event(defines.events.on_robot_mined_entity, entity_destroyed)
-script.on_event(defines.events.script_raised_destroy, entity_destroyed)
+if settings.startup["planet-picker-modify-vulcanus-generator"] then
+
+  script.on_event(defines.events.on_built_entity, entity_built)
+  script.on_event(defines.events.on_robot_built_entity, entity_built)
+  script.on_event(defines.events.script_raised_built, entity_built)
+
+  script.on_event(defines.events.on_player_mined_entity, entity_destroyed)
+  script.on_event(defines.events.on_robot_mined_entity, entity_destroyed)
+  script.on_event(defines.events.on_entity_died, entity_destroyed)
+  script.on_event(defines.events.script_raised_destroy, entity_destroyed)
+
+end

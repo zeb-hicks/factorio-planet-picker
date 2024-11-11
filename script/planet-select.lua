@@ -57,6 +57,36 @@ function create_empty_void()
   end
 end
 
+function setup_force()
+  game.create_force("picking_planet")
+
+  create_empty_void()
+  game.forces.player.set_surface_hidden(game.surfaces.empty_void, true)
+  game.forces.picking_planet.set_surface_hidden(game.surfaces.empty_void, true)
+  game.forces.picking_planet.set_surface_hidden(game.surfaces.nauvis, true)
+  game.forces.picking_planet.disable_research()
+  game.forces.picking_planet.disable_all_prototypes()
+end
+
+function setup_planets()
+  game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
+
+  game.planets.gleba.create_surface()
+  game.planets.fulgora.create_surface()
+  game.planets.vulcanus.create_surface()
+  game.planets.aquilo.create_surface()
+
+  game.surfaces.gleba.request_to_generate_chunks({0, 0}, 8)
+  game.surfaces.fulgora.request_to_generate_chunks({0, 0}, 8)
+  game.surfaces.vulcanus.request_to_generate_chunks({0, 0}, 8)
+  game.surfaces.aquilo.request_to_generate_chunks({0, 0}, 8)
+
+  chart_starting_area(game.planets.gleba.surface)
+  chart_starting_area(game.planets.fulgora.surface)
+  chart_starting_area(game.planets.vulcanus.surface)
+  chart_starting_area(game.planets.aquilo.surface)
+end
+
 function moved_surface(e)
   local player = game.players[e.player_index]
   local surface = game.surfaces[e.surface_index]

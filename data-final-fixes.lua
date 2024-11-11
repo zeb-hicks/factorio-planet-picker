@@ -1,13 +1,16 @@
 require("utils")
 
-transfer_effects("oil-gathering", "fluid-handling")
-transfer_effects("oil-processing", "fluid-handling")
-extricate_technology("oil-gathering")
-extricate_technology("oil-processing")
-hide_technology("oil-gathering")
-hide_technology("oil-processing")
+if settings.startup["planet-picker-modify-vulcanus"]
+or settings.startup["planet-picker-modify-fulgora"] then
+  transfer_effects("oil-gathering", "fluid-handling")
+  transfer_effects("oil-processing", "fluid-handling")
+  extricate_technology("oil-gathering")
+  extricate_technology("oil-processing")
+  hide_technology("oil-gathering")
+  hide_technology("oil-processing")
 
-data.raw["technology"]["calcite-processing"].prerequisites = { "fluid-handling" }
+  data.raw["technology"]["calcite-processing"].prerequisites = { "fluid-handling" }
+end
 
 -- Add low probability to gather wood from carbonised trees
 if settings.startup["planet-picker-modify-vulcanus"] then

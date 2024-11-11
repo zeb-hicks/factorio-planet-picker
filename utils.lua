@@ -134,3 +134,10 @@ function transfer_effects(from, to)
     end
   end
 end
+
+function unlock_planet_technology(force, surface)
+  log("Unlocking tech for "..surface.name)
+  local name = "planet-discovery-"..surface.name
+  local tech = force.technologies[name]
+  if tech then tech.researched = true end
+end

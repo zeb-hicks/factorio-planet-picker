@@ -30,7 +30,8 @@ data.extend({
       height = 512,
     }},
     stack_size = 10,
-    weight = 10000000,
+    weight = 100000,
+    rocket_lift_weight = 100000,
     place_result = "thermal-vent"
   }
 })

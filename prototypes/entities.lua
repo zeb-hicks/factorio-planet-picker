@@ -8,7 +8,7 @@ data.extend({
     icon_size = 512,
     flags = {"placeable-neutral", "player-creation"},
     corpse = "big-remnants",
-    minable = {mining_time = 2, result = "thermal-vent"},
+    minable = {mining_time = 1, result = "thermal-vent"},
     max_health = 300,
 
     collision_box = {{-1.2, -1.2}, {1.2, 1.2}},
@@ -16,17 +16,15 @@ data.extend({
 
     fast_replaceable_group = "pumpjack",
     pictures = {
-      layers = {
-        {
-          filename = "__planet-picker__/graphics/entities/thermal-vent.png",
-          priority = "low",
-          width = 512,
-          height = 512,
-          line_length = 12,
-          shift = {0, 0},
-          scale = 0.25,
-        }
-      }
+      layers = {{
+        filename = "__planet-picker__/graphics/entities/thermal-vent.png",
+        priority = "low",
+        width = 512,
+        height = 512,
+        line_length = 12,
+        shift = {0, 0},
+        scale = 0.25,
+      }}
     },
 
     graphics_set = {
@@ -48,43 +46,25 @@ data.extend({
       }
     },
 
-    smoke = {
-      {
-        name = "smoke",
-        north_position = {0.0, 0.0},
-        east_position = {0.0, 0.0},
-        frequency = 10,
-        starting_vertical_speed = 0.08,
-        slow_down_factor = 1,
-        starting_frame_deviation = 60
-      }
-    },
+    smoke = {{
+      name = "smoke",
+      north_position = {0.0, 0.0},
+      east_position = {0.0, 0.0},
+      frequency = 10,
+      starting_vertical_speed = 0.08,
+      slow_down_factor = 1,
+      starting_frame_deviation = 60
+    }},
 
     -- output_fluid_box = {
     --   volume = 100,
     --   pipe_covers = nil,
     --   -- hide_connection_info = true,
     --   pipe_connections = {
-    --     {
-    --       position = {0, 1},
-    --       direction = 0,
-    --       flow_direction = "output",
-    --     },
-    --     {
-    --       position = {-1, 0},
-    --       direction = 4,
-    --       flow_direction = "output",
-    --     },
-    --     {
-    --       position = {0, -1},
-    --       direction = 8,
-    --       flow_direction = "output",
-    --     },
-    --     {
-    --       position = {1, 0},
-    --       direction = 12,
-    --       flow_direction = "output",
-    --     }
+    --     { position = {0, 1}, direction = 0, flow_direction = "output", },
+    --     { position = {-1, 0}, direction = 4, flow_direction = "output", },
+    --     { position = {0, -1}, direction = 8, flow_direction = "output", },
+    --     { position = {1, 0}, direction = 12, flow_direction = "output", }
     --   }
     -- },
 
@@ -105,11 +85,10 @@ data.extend({
       type = "void",
       usage_priority = "secondary-input",
     },
-    mining_speed = 1,
+    mining_speed = 3,
     resource_categories = {"basic-fluid"},
     resource_searching_radius = 0.49,
-    radius_visualisation_picture =
-    {
+    radius_visualisation_picture = {
       filename = "__base__/graphics/entity/pumpjack/pumpjack-radius-visualization.png",
       width = 12,
       height = 12
@@ -127,13 +106,31 @@ local generator = {
   collision_box = {{-1.2, -1.2}, {1.2, 1.2}},
   selection_box = nil,
   -- selection_box = {{-3.5, -1.5}, {-1.5, 1.5}},
+  -- minable = {mining_time = 2, result = "thermal-vent"},
   minable = nil,
+  -- max_health = 300,
   max_health = nil,
+  -- corpse = "big-remnants",
+
   allow_copy_paste = false,
   impact_category = "metal",
   is_military_target = false,
-  energy_source =
-  {
+
+  -- fluid_box = {
+  --   volume = 100,
+  --   pipe_covers = nil,
+  --   hide_connection_info = false,
+  --   production_type = "input",
+  --   filter = "sulfuric-acid",
+  --   minimum_temperature = 500.0,
+  --   pipe_connections = {
+  --     { position = {0, 0}, direction = 0, flow_direction = "input", },
+  --     { position = {0, 0}, direction = 4, flow_direction = "input", },
+  --     { position = {0, 0}, direction = 8, flow_direction = "input", },
+  --     { position = {0, 0}, direction = 12, flow_direction = "input", }
+  --   }
+  -- },
+  energy_source = {
     type = "electric",
     buffer_capacity = "200kJ",
     usage_priority = "primary-output",
@@ -142,10 +139,8 @@ local generator = {
   },
   energy_production = "200kW",
   energy_usage = "0kW",
-  working_sound =
-  {
-    sound =
-    {
+  working_sound = {
+    sound = {
       filename = "__base__/sound/steam-turbine.ogg",
       volume = 0.49,
       speed_smoothing_window_size = 60,
@@ -157,6 +152,16 @@ local generator = {
     fade_in_ticks = 4,
     fade_out_ticks = 20
   },
+
+  smoke = {{
+    name = "smoke",
+    north_position = {0.0, 0.0},
+    east_position = {0.0, 0.0},
+    frequency = 10,
+    starting_vertical_speed = 0.08,
+    slow_down_factor = 1,
+    starting_frame_deviation = 60
+  }},
 }
 
 data.extend({generator})

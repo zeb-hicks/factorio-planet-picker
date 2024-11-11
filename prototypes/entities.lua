@@ -1,7 +1,7 @@
 require("utils.table")
 
-data.extend({
-  {
+if settings.startup["planet-picker-modify-vulcanus-generator"] then
+  local vent = {
     type = "mining-drill",
     name = "thermal-vent",
     icon = "__planet-picker__/graphics/icons/thermal-vent.png",
@@ -56,30 +56,8 @@ data.extend({
       starting_frame_deviation = 60
     }},
 
-    -- output_fluid_box = {
-    --   volume = 100,
-    --   pipe_covers = nil,
-    --   -- hide_connection_info = true,
-    --   pipe_connections = {
-    --     { position = {0, 1}, direction = 0, flow_direction = "output", },
-    --     { position = {-1, 0}, direction = 4, flow_direction = "output", },
-    --     { position = {0, -1}, direction = 8, flow_direction = "output", },
-    --     { position = {1, 0}, direction = 12, flow_direction = "output", }
-    --   }
-    -- },
-
     vector_to_place_result = {0, 0},
-    -- energy_source =
-    -- {
-    --   type = "electric",
-    --   buffer_capacity = "120MJ",
-    --   usage_priority = "primary-output",
-    --   input_flow_limit = "1kW",
-    --   output_flow_limit = "120MW",
-    --   render_no_power_icon = false,
-    -- },
-    -- energy_production = "120MW",
-    -- energy_usage = "1kW",
+
     energy_usage = "1kW",
     energy_source = {
       type = "void",
@@ -95,73 +73,55 @@ data.extend({
     },
     monitor_visualization_tint = {78, 173, 255},
   }
-})
 
----@type data.ElectricEnergyInterfacePrototype
-local generator = {
-  type = "electric-energy-interface",
-  name = "thermal-vent-generator",
-  icon = "__planet-picker__/graphics/icons/thermal-vent.png",
-  icon_size = 512,
-  collision_box = {{-1.2, -1.2}, {1.2, 1.2}},
-  selection_box = nil,
-  -- selection_box = {{-3.5, -1.5}, {-1.5, 1.5}},
-  -- minable = {mining_time = 2, result = "thermal-vent"},
-  minable = nil,
-  -- max_health = 300,
-  max_health = nil,
-  -- corpse = "big-remnants",
+  ---@type data.ElectricEnergyInterfacePrototype
+  local generator = {
+    type = "electric-energy-interface",
+    name = "thermal-vent-generator",
+    icon = "__planet-picker__/graphics/icons/thermal-vent.png",
+    icon_size = 512,
+    collision_box = {{-1.2, -1.2}, {1.2, 1.2}},
+    selection_box = nil,
+    minable = nil,
+    max_health = nil,
 
-  allow_copy_paste = false,
-  impact_category = "metal",
-  is_military_target = false,
+    allow_copy_paste = false,
+    impact_category = "metal",
+    is_military_target = false,
 
-  -- fluid_box = {
-  --   volume = 100,
-  --   pipe_covers = nil,
-  --   hide_connection_info = false,
-  --   production_type = "input",
-  --   filter = "sulfuric-acid",
-  --   minimum_temperature = 500.0,
-  --   pipe_connections = {
-  --     { position = {0, 0}, direction = 0, flow_direction = "input", },
-  --     { position = {0, 0}, direction = 4, flow_direction = "input", },
-  --     { position = {0, 0}, direction = 8, flow_direction = "input", },
-  --     { position = {0, 0}, direction = 12, flow_direction = "input", }
-  --   }
-  -- },
-  energy_source = {
-    type = "electric",
-    buffer_capacity = "200kJ",
-    usage_priority = "primary-output",
-    input_flow_limit = "0kW",
-    output_flow_limit = "200kW"
-  },
-  energy_production = "200kW",
-  energy_usage = "0kW",
-  working_sound = {
-    sound = {
-      filename = "__base__/sound/steam-turbine.ogg",
-      volume = 0.49,
-      speed_smoothing_window_size = 60,
-      advanced_volume_control = {attenuation = "exponential"},
+    energy_source = {
+      type = "electric",
+      buffer_capacity = "200kJ",
+      usage_priority = "primary-output",
+      input_flow_limit = "0kW",
+      output_flow_limit = "200kW"
     },
-    match_speed_to_activity = true,
-    audible_distance_modifier = 0.8,
-    max_sounds_per_type = 3,
-    fade_in_ticks = 4,
-    fade_out_ticks = 20
-  },
+    energy_production = "200kW",
+    energy_usage = "0kW",
+    working_sound = {
+      sound = {
+        filename = "__base__/sound/steam-turbine.ogg",
+        volume = 0.49,
+        speed_smoothing_window_size = 60,
+        advanced_volume_control = {attenuation = "exponential"},
+      },
+      match_speed_to_activity = true,
+      audible_distance_modifier = 0.8,
+      max_sounds_per_type = 3,
+      fade_in_ticks = 4,
+      fade_out_ticks = 20
+    },
 
-  smoke = {{
-    name = "smoke",
-    north_position = {0.0, 0.0},
-    east_position = {0.0, 0.0},
-    frequency = 10,
-    starting_vertical_speed = 0.08,
-    slow_down_factor = 1,
-    starting_frame_deviation = 60
-  }},
-}
+    smoke = {{
+      name = "smoke",
+      north_position = {0.0, 0.0},
+      east_position = {0.0, 0.0},
+      frequency = 10,
+      starting_vertical_speed = 0.08,
+      slow_down_factor = 1,
+      starting_frame_deviation = 60
+    }},
+  }
 
-data.extend({generator})
+  data.extend({vent, generator})
+end

@@ -74,37 +74,48 @@ function remove_dependency(tech, dependency)
   end
 end
 
----Removes a technology from the tree, joining the dangling tree edges.
----@param name string
-function extricate_technology(name)
-  local ancestors = {}
+function remove_from_descendants(name)
   local descendants = {}
-  -- Store the technologies above the target technology
   for _, tech in pairs(data.raw.technology) do
     if tech.prerequisites then
       for i = #tech.prerequisites, 1, -1 do
         if tech.prerequisites[i] == name then
-          table.insert(ancestors, tech.name)
+          table.insert(descendants, tech.name)
           table.remove(tech.prerequisites, i)
         end
       end
     end
   end
+  return descendants
+end
 
-  -- Store the technologies below the target technology
+function remove_prerequisites(name)
+  local ancestors = {}
   if data.raw.technology[name].prerequisites then
     for i = #data.raw.technology[name].prerequisites, 1, -1 do
-      table.insert(descendants, data.raw.technology[name].prerequisites[i])
+      local prerequisite = data.raw.technology[name].prerequisites[i]
+      table.insert(ancestors, prerequisite)
+      table.remove(data.raw.technology[name].prerequisites, i)
     end
   end
+  return ancestors
+end
+
+---Removes a technology from the tree, joining the dangling tree edges.
+---@param name string
+function extricate_technology(name)
+  -- Store the technologies that refer to the target technology as a prerequisite
+  local descendants = remove_from_descendants(name)
+  -- Store the technologies above the target technology
+  local ancestors = remove_prerequisites(name)
 
   -- Remove the targe technology from the heirarchy
   data.raw.technology[name].prerequisites = nil
 
   -- Link the ancestors to the descendants
-  for _, decendant in pairs(descendants) do
+  for _, descendant in pairs(descendants) do
     for _, ancestor in pairs(ancestors) do
-      table.insert(data.raw.technology[decendant].prerequisites, ancestor)
+      table.insert(data.raw.technology[descendant].prerequisites, ancestor)
     end
   end
 end
@@ -114,17 +125,12 @@ function hide_technology(name)
   data.raw.technology[name].hidden = true
 end
 
-function strip_dependants(name)
-  for _, tech in pairs(data.raw.technology) do
-    if tech.prerequisites then
-      for i = #tech.prerequisites, 1, -1 do
-        if tech.prerequisites[i] == name then
-          table.remove(tech.prerequisites, i)
-        end
-      end
-      if #tech.prerequisites == 0 then
-        tech.prerequisites = nil
-      end
+function transfer_effects(from, to)
+  local from = data.raw.technology[from]
+  local to = data.raw.technology[to]
+  if from and to then
+    for _, effect in pairs(from.effects) do
+      table.insert(to.effects, effect)
     end
   end
 end

@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 2024-11-12
+  Features:
+    - Added settings for customizing what changes should be made. It's now possible to disable all changes and simply enable the planet select screen, allowing you to use other mods to modify the bootstrapping on other planets however you like.
+  Changes:
+    - Added a new Acid Processing technology to replace Oil Processing on Vulcanus
+    - Moved the Chemical Plant and Refinery unlocks to the Fluid Handling technology
+    - Removed steel from and adjusted the Thermal Vent recipe since it's no longer needed anywhere else
+    - Removed the carbon steel smelting chain and alternate recipes as they're no longer necessary
+  Fixes:
+    - Fixed some issues with the patching of the oil dependency technology
+    - Fixed a crash where the thermal vent prototype would reference sounds without nil checking
+    - Fixed several other potential crashes
+---------------------------------------------------------------------------------------------------
 Version: 0.2.1
 Date: 2024-11-06
   Fixes:

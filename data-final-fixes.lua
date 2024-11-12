@@ -1,7 +1,7 @@
 require("utils")
 
-if settings.startup["planet-picker-modify-vulcanus"]
-or settings.startup["planet-picker-modify-fulgora"] then
+if settings.startup["planet-picker-modify-vulcanus-generator"]
+or settings.startup["planet-picker-modify-fulgora-ice"] then
   transfer_effects("oil-gathering", "fluid-handling")
   transfer_effects("oil-processing", "fluid-handling")
   extricate_technology("oil-gathering")
@@ -13,13 +13,13 @@ or settings.startup["planet-picker-modify-fulgora"] then
 end
 
 -- Add low probability to gather wood from carbonised trees
-if settings.startup["planet-picker-modify-vulcanus"] then
+if settings.startup["planet-picker-modify-vulcanus-trees"] then
   table.insert(data.raw["tree"]["ashland-lichen-tree"].minable.results, { type = "item", name = "wood", amount = 1, probability = 0.06 })
   table.insert(data.raw["tree"]["ashland-lichen-tree-flaming"].minable.results, { type = "item", name = "wood", amount = 1, probability = 0.14 })
   table.insert(data.raw["tree"]["ashland-lichen-tree-flaming"].minable.results, { type = "item", name = "wood", amount = 2, probability = 0.03 })
 end
 
-if settings.startup["planet-picker-modify-fulgora"] then
+if settings.startup["planet-picker-modify-fulgora-ruins"] then
   table.insert(data.raw["lightning-attractor"]["fulgoran-ruin-attractor"].minable.results, { type = "item", name = "substation", amount = 1, probability = 0.5 })
   table.insert(data.raw["lightning-attractor"]["fulgoran-ruin-attractor"].minable.results, { type = "item", name = "lightning-rod", amount = 1, probability = 0.2 })
   table.insert(data.raw["simple-entity"]["fulgoran-ruin-vault"].minable.results, { type = "item", name = "accumulator", amount = 1, probability = 0.66 })

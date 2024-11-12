@@ -1,7 +1,14 @@
 data.extend({
   {
     type = "bool-setting",
-    name = "planet-picker-modify-fulgora",
+    name = "planet-picker-modify-fulgora-ruins",
+    setting_type = "startup",
+    default_value = true,
+    order = "a-a"
+  },
+  {
+    type = "bool-setting",
+    name = "planet-picker-modify-fulgora-ice",
     setting_type = "startup",
     default_value = true,
     order = "a-a"
@@ -11,7 +18,7 @@ data.extend({
     name = "planet-picker-modify-vulcanus-trees",
     setting_type = "startup",
     default_value = true,
-    order = "a-b"
+    order = "b-a"
   },
   {
     type = "bool-setting",
@@ -25,41 +32,41 @@ data.extend({
     name = "planet-picker-modify-vulcanus-mining",
     setting_type = "startup",
     default_value = true,
-    order = "a-b"
+    order = "a-c"
   },
   {
     type = "bool-setting",
     name = "planet-picker-nauvis",
     setting_type = "startup",
     default_value = true,
-    order = "b-a"
+    order = "c-a"
   },
   {
     type = "bool-setting",
     name = "planet-picker-gleba",
     setting_type = "startup",
     default_value = true,
-    order = "b-b"
+    order = "c-b"
   },
   {
     type = "bool-setting",
     name = "planet-picker-fulgora",
     setting_type = "startup",
     default_value = true,
-    order = "b-c"
+    order = "c-c"
   },
   {
     type = "bool-setting",
     name = "planet-picker-vulcanus",
     setting_type = "startup",
     default_value = true,
-    order = "b-d"
+    order = "c-d"
   },
   {
     type = "bool-setting",
     name = "planet-picker-aquilo",
     setting_type = "startup",
     default_value = false,
-    order = "b-e"
+    order = "c-e"
   },
 })

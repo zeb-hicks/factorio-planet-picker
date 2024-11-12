@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.1
+Date: 2024-11-12
+  Changes:
+    - Added Ice Melting technology to Fulgora start as a source of water
+  Fixes:
+    - Fixed a setting misconfiguration for Vulcanus and Fulgora
+---------------------------------------------------------------------------------------------------
 Version: 0.3.0
 Date: 2024-11-12
   Features:

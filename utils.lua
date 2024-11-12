@@ -58,9 +58,18 @@ function remove_recipes(recipes)
 end
 
 function find_in(table, key)
+  if type(key) == "string" then
+    for k, v in pairs(table) do
+      if k == key then
+        return v
+      end
+    end
+  end
+  if type(key) == "table" then
   for k, v in pairs(table) do
     if v == key then
       return k
+      end
     end
   end
   return nil

@@ -29,3 +29,7 @@ if settings.startup["planet-picker-modify-fulgora-ruins"] then
   table.insert(data.raw["simple-entity"]["fulgoran-ruin-huge"].minable.results, { type = "item", name = "accumulator", amount = 1, probability = 0.3 })
   table.insert(data.raw["simple-entity"]["fulgoran-ruin-huge"].minable.results, { type = "item", name = "medium-electric-pole", amount = 1, probability = 0.5 })
 end
+
+if settings.startup["planet-picker-modify-fulgora-ice"] then
+  table.insert(data.raw["technology"]["fluid-handling"].effects, {type = "unlock-recipe", recipe = "ice-melting" })
+end

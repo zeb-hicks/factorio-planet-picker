@@ -4,76 +4,90 @@ data.extend({
     name = "planet-picker-modify-fulgora-ruins",
     setting_type = "startup",
     default_value = true,
-    order = "a-a"
+    order = "f-a"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-fulgora-ice",
     setting_type = "startup",
     default_value = true,
-    order = "a-b"
+    order = "f-b"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-fulgora-sulfur",
     setting_type = "startup",
     default_value = true,
-    order = "a-c"
+    order = "f-c"
+  },
+  {
+    type = "bool-setting",
+    name = "planet-picker-modify-gleba-coal",
+    setting_type = "startup",
+    default_value = true,
+    order = "g-a"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-vulcanus-trees",
     setting_type = "startup",
     default_value = true,
-    order = "b-a"
+    order = "v-a"
+  },
+  {
+    type = "bool-setting",
+    name = "planet-picker-modify-vulcanus-plastic",
+    setting_type = "startup",
+    default_value = true,
+    order = "v-b"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-vulcanus-generator",
     setting_type = "startup",
     default_value = true,
-    order = "a-b"
+    order = "v-c"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-vulcanus-mining",
     setting_type = "startup",
     default_value = true,
-    order = "a-c"
+    order = "v-d"
   },
   {
     type = "bool-setting",
     name = "planet-picker-nauvis",
     setting_type = "runtime-global",
     default_value = true,
-    order = "c-a"
+    order = "p-a"
   },
   {
     type = "bool-setting",
     name = "planet-picker-gleba",
     setting_type = "runtime-global",
     default_value = true,
-    order = "c-b"
+    order = "p-b"
   },
   {
     type = "bool-setting",
     name = "planet-picker-fulgora",
     setting_type = "runtime-global",
     default_value = true,
-    order = "c-c"
+    order = "p-c"
   },
   {
     type = "bool-setting",
     name = "planet-picker-vulcanus",
     setting_type = "runtime-global",
     default_value = true,
-    order = "c-d"
+    order = "p-d"
   },
   {
     type = "bool-setting",
     name = "planet-picker-aquilo",
     setting_type = "runtime-global",
     default_value = false,
-    order = "c-e"
+    order = "p-e"
   },
 })

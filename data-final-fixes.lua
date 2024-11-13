@@ -1,7 +1,9 @@
 require("utils")
 
 if settings.startup["planet-picker-modify-vulcanus-generator"]
-or settings.startup["planet-picker-modify-fulgora-ice"] then
+or settings.startup["planet-picker-modify-vulcanus-plastic"]
+or settings.startup["planet-picker-modify-fulgora-ice"]
+or settings.startup["planet-picker-modify-fulgora-sulfur"] then
   transfer_effects("oil-gathering", "fluid-handling")
   transfer_effects("oil-processing", "fluid-handling")
   extricate_technology("oil-gathering")
@@ -13,22 +15,17 @@ or settings.startup["planet-picker-modify-fulgora-ice"] then
 end
 
 if settings.startup["planet-picker-modify-fulgora-sulfur"] then
-  -- Add chance to get sulfur from recycling batteries
   table.insert(data.raw["recipe"]["battery-recycling"].results, { type = "item", name = "sulfur", amount = 1, probability = 0.125 })
 end
 
 if settings.startup["planet-picker-modify-vulcanus-plastic"] then
-  -- Add some kind of recipe for getting plastic on vulcanus
-  -- Carbon + Steam?
   table.insert(data.raw["technology"]["plastics"].effects, {type = "unlock-recipe", recipe = "polymer-dissolution" })
 end
 
-if settings.startup["planet-picker-modify-gleba-grenades"] then
-  -- Add a way to make coal on gleba
+if settings.startup["planet-picker-modify-gleba-coal"] then
   table.insert(data.raw["technology"]["military-2"].effects, {type = "unlock-recipe", recipe = "spin-bio-seperation" })
 end
 
--- Add low probability to gather wood from carbonised trees
 if settings.startup["planet-picker-modify-vulcanus-trees"] then
   table.insert(data.raw["tree"]["ashland-lichen-tree"].minable.results, { type = "item", name = "wood", amount = 1, probability = 0.06 })
   table.insert(data.raw["tree"]["ashland-lichen-tree-flaming"].minable.results, { type = "item", name = "wood", amount = 1, probability = 0.14 })

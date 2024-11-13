@@ -33,14 +33,14 @@ data.extend({
     },
     category = "chemistry",
     enabled = false,
-    energy_required = 20.0,
+    energy_required = 12.0,
     ingredients = {
-      { type = "fluid", name = "heavy-oil", amount = 1000 },
-      { type = "item", name = "carbon", amount = 50 }
+      { type = "fluid", name = "heavy-oil", amount = 400 },
+      { type = "item", name = "carbon", amount = 20 }
     },
     results = {
-      { type = "fluid", name = "steam", amount = 200, temperature = 500 },
-      { type = "item", name = "plastic-bar", amount = 20 }
+      { type = "fluid", name = "steam", amount = 100, temperature = 500 },
+      { type = "item", name = "plastic-bar", amount = 40 }
     }
   },
   {

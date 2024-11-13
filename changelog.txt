@@ -1,4 +1,20 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.4.0
+Date: 2024-11-14
+  Changes:
+    - Added Centrifugation for coal production on Gleba
+    - Added Polymer Dissolution for plastic production on Vulcanus
+    - Added Sulfur as a byproduct of Battery Recycling for sulfur production on Fulgora
+  Features:
+    - Added a remote interface for adding custom planets to the planet picker
+    - Planets can now be toggled without having to start a new save
+    - Added a new loading UI for pregenerating the planets to prevent unexpected lag when loading in for the first time
+---------------------------------------------------------------------------------------------------
+Version: 0.3.2
+Date: 2024-11-12
+  Fixes:
+    - Locale fixes
+---------------------------------------------------------------------------------------------------
 Version: 0.3.1
 Date: 2024-11-12
   Changes:

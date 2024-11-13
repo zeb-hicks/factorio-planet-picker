@@ -45,7 +45,7 @@ data.extend({
   },
   {
     type = "recipe",
-    name = "spin-bio-seperation",
+    name = "centrifugation",
     icons = {
       {
         icon = "__base__/graphics/icons/coal.png",

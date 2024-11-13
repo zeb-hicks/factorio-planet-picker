@@ -23,7 +23,7 @@ if settings.startup["planet-picker-modify-vulcanus-plastic"] then
 end
 
 if settings.startup["planet-picker-modify-gleba-coal"] then
-  table.insert(data.raw["technology"]["military-2"].effects, {type = "unlock-recipe", recipe = "spin-bio-seperation" })
+  table.insert(data.raw["technology"]["military-2"].effects, {type = "unlock-recipe", recipe = "centrifugation" })
 end
 
 if settings.startup["planet-picker-modify-vulcanus-trees"] then

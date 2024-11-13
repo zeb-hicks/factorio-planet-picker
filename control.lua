@@ -1,18 +1,23 @@
-require("gui/planet-select")
+require("gui")
 require("script/startup")
 require("script/planet-select")
 require("script/thermal-vent")
 
 function init()
-  setup_force()
-  setup_planets()
-
   if remote.interfaces["freeplay"] then
     remote.call("freeplay", "set_disable_crashsite", true)
     remote.call("freeplay", "set_skip_intro", true)
     remote.call("freeplay", "set_ship_items", {})
     remote.call("freeplay", "set_debris_items", {})
   end
+
+  PlanetSelect.setup_force()
+  PlanetSelect.setup_planets()
+end
+
+---@param e EventData.on_runtime_mod_setting_changed
+function settings_changed(e)
+  GUI.update(game.players[e.player_index], PlanetSelect.planets)
 end
 
 ---@param player LuaPlayer
@@ -56,7 +61,9 @@ function player_created(e)
   player.teleport({0, 0}, game.surfaces.empty_void)
   player.minimap_enabled = false
 
-  GUI.make_startup_window(player)
+  GUI.setup(PlanetSelect.planets)
+  -- GUI.make_startup_window(player)
+  GUI.spawn_loading_screen(player)
 end
 
 function tick(e)
@@ -72,6 +79,11 @@ function tick(e)
   end
 end
 
+remote.add_interface("planet-picker", {
+  add_planet = PlanetSelect.add_planet
+})
+
 script.on_event(defines.events.on_game_created_from_scenario, init)
 script.on_event(defines.events.on_tick, tick)
 script.on_event(defines.events.on_player_created, player_created)
+script.on_event(defines.events.on_runtime_mod_setting_changed, settings_changed)

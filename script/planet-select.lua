@@ -1,14 +1,8 @@
 require("utils")
 
-function gui_click(e)
-  local force = game.forces.player
-  local match = e.element.name:match("start%-on%-(%w+)")
-  if not match then return end
-  start_on(match, game.players[e.player_index])
-  GUI.close_startup_window(game.players[e.player_index])
-end
+PlanetSelect = PlanetSelect or {}
 
-function start_on(planet, player)
+PlanetSelect.start_on = function(planet, player)
   local force = game.forces.player;
   player.force = force
   player.minimap_enabled = true
@@ -27,7 +21,7 @@ function start_on(planet, player)
   end
 end
 
-function create_empty_void()
+PlanetSelect.create_empty_void = function()
   local surface = game.create_surface("empty_void", {
     seed = 0,
     width = 250,
@@ -57,42 +51,112 @@ function create_empty_void()
   end
 end
 
-function setup_force()
+PlanetSelect.setup_force = function()
   game.create_force("picking_planet")
 
-  create_empty_void()
+  PlanetSelect.create_empty_void()
   game.forces.player.set_surface_hidden(game.surfaces.empty_void, true)
+  for _, surface in pairs(game.surfaces) do
+    game.forces.player.set_surface_hidden(surface, true)
+    game.forces.picking_planet.set_surface_hidden(surface, true)
+  end
   game.forces.picking_planet.set_surface_hidden(game.surfaces.empty_void, true)
   game.forces.picking_planet.set_surface_hidden(game.surfaces.nauvis, true)
   game.forces.picking_planet.disable_research()
   game.forces.picking_planet.disable_all_prototypes()
 end
 
-function setup_planets()
+PlanetSelect.planets = {
+  { name = "nauvis", tooltip = "Nauvis", icon = "nauvis", surface = "nauvis" },
+  { name = "gleba", tooltip = "Gleba", icon = "gleba", surface = "gleba" },
+  { name = "fulgora", tooltip = "Fulgora", icon = "fulgora", surface = "fulgora" },
+  { name = "vulcanus", tooltip = "Vulcanus", icon = "vulcanus", surface = "vulcanus" },
+  { name = "aquilo", tooltip = "Aquilo", icon = "aquilo", surface = "aquilo" },
+}
+
+PlanetSelect.add_planet = function(options)
+  if not options or type(options) ~= "table" then error("add_planet expects a table of options defining the new planet") end
+  if not options.name then error("add_planet requires a name parameter") end
+  if not options.surface then error("add_planet requires a surface parameter") end
+  local exists = find_in(PlanetSelect.planets, { name = options.name })
+  if exists then error("Planet with name " .. options.name .. " already exists") end
+
+  log("Adding planet " .. options.name)
+
+  local planet = {
+    name = options.name,
+    surface = options.surface,
+    icon = options.icon or "unspecified_planet",
+    callback = options.callback or function() end
+  }
+
+  table.insert(PlanetSelect.planets, planet)
+
+  PlanetSelect.enable_planet(options.name)
+end
+
+PlanetSelect.setup_planets = function()
   game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
 
-  game.planets.gleba.create_surface()
-  game.planets.fulgora.create_surface()
-  game.planets.vulcanus.create_surface()
-  game.planets.aquilo.create_surface()
+  for _, planet in pairs(PlanetSelect.planets) do
+    PlanetSelect.enable_planet(planet.name)
+  end
+end
 
-  game.surfaces.gleba.request_to_generate_chunks({0, 0}, 8)
-  game.surfaces.fulgora.request_to_generate_chunks({0, 0}, 8)
-  game.surfaces.vulcanus.request_to_generate_chunks({0, 0}, 8)
-  game.surfaces.aquilo.request_to_generate_chunks({0, 0}, 8)
+PlanetSelect.progress = {}
 
-  chart_starting_area(game.planets.gleba.surface)
-  chart_starting_area(game.planets.fulgora.surface)
-  chart_starting_area(game.planets.vulcanus.surface)
-  chart_starting_area(game.planets.aquilo.surface)
+PlanetSelect.enable_planet = function(name)
+  local radius = 8
+  game.planets[name].create_surface()
+  game.surfaces[name].request_to_generate_chunks({0, 0}, radius)
+  local area = (radius * 2 + 1) ^ 2
+  PlanetSelect.progress[name] = {
+    chunks = { generated = 0, total = area },
+    chart = { charted = 0, total = area }
+  }
+end
+
+---@param e EventData.on_chunk_generated
+function chunk_generated(e)
+  if not PlanetSelect.progress and PlanetSelect.progress[e.surface.name] then return end
+  local progress = PlanetSelect.progress[e.surface.name].chunks
+
+  progress.generated = progress.generated + 1
+  GUI.progress(e.surface.name.."_gen", progress.generated / progress.total)
+
+  if progress.generated == progress.total then
+    chart_starting_area(e.surface)
+  end
+end
+
+---@param e EventData.on_chunk_charted
+function chunk_charted(e)
+  local surface = game.surfaces[e.surface_index]
+  if not PlanetSelect.progress and PlanetSelect.progress[surface.name] then return end
+  local progress = PlanetSelect.progress[surface.name].chart
+
+  progress.charted = progress.charted + 1
+  GUI.progress(surface.name.."_chart", progress.charted / progress.total)
+end
+script.on_event(defines.events.on_chunk_generated, chunk_generated)
+script.on_event(defines.events.on_chunk_charted, chunk_charted)
+
+function gleba_setup()
+
+end
+
+function fulgora_setup()
+
+end
+
+function vulcanus_setup()
+
 end
 
 function moved_surface(e)
+  if not game.surfaces["empty_void"] then return end
   local player = game.players[e.player_index]
   local surface = game.surfaces[e.surface_index]
-
-  log("Surface change for "..player.name.." to "..surface.name)
-  log("Controller is "..player.controller_type)
 
   if not player.controller_type == defines.controllers.character then return end
   if surface.name == "empty_void" then return end
@@ -102,5 +166,3 @@ function moved_surface(e)
 end
 
 script.on_event(defines.events.on_player_changed_surface, moved_surface)
-
-script.on_event(defines.events.on_gui_click, gui_click)

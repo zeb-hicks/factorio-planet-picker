@@ -38,5 +38,13 @@ data.extend({
     size = 512,
     scale = 1.0,
     priority = "high",
+  },
+  {
+    type = "sprite",
+    name = "unspecified_planet",
+    filename = "__planet-picker__/graphics/icons/unspecified_planet.png",
+    size = 512,
+    scale = 1.0,
+    priority = "high",
   }
 })

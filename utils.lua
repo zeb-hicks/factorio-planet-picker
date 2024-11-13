@@ -72,6 +72,20 @@ function find_in(table, key)
       end
     end
   end
+  if type(key) == "table" then
+    for k, v in pairs(table) do
+      local a, b = 0, 0
+      for k2, v2 in pairs(key) do
+        a = a + 1
+        if v[k2] == v2 then
+          b = b + 1
+        end
+      end
+      if a == b and a > 0 then
+        return k
+      end
+    end
+  end
   return nil
 end
 
@@ -145,8 +159,19 @@ function transfer_effects(from, to)
 end
 
 function unlock_planet_technology(force, surface)
-  log("Unlocking tech for "..surface.name)
   local name = "planet-discovery-"..surface.name
   local tech = force.technologies[name]
   if tech then tech.researched = true end
+end
+
+function nil_chain(table, ...)
+  local value = table
+  for _, key in pairs({...}) do
+    if value[key] then
+      value = value[key]
+    else
+      return nil
+    end
+  end
+  return value
 end

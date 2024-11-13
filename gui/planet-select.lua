@@ -1,13 +1,12 @@
-GUI = GUI or {}
-
 GUI.planets = GUI.planets or {}
 
-table.insert(GUI.planets, {name = "nauvis", sprite = "nauvis", tooltip = "Nauvis"})
-table.insert(GUI.planets, {name = "gleba", sprite = "gleba", tooltip = "Gleba"})
-table.insert(GUI.planets, {name = "fulgora", sprite = "fulgora", tooltip = "Fulgora"})
-table.insert(GUI.planets, {name = "vulcanus", sprite = "vulcanus", tooltip = "Vulcanus"})
-if settings.startup["planet-picker-aquilo"].value then
-  table.insert(GUI.planets, {name = "aquilo", sprite = "aquilo", tooltip = "Aquilo"})
+GUI.setup = function(planets)
+  GUI.planets = {}
+  for _, planet in pairs(planets) do
+    if settings.global["planet-picker-"..planet.name].value then
+      table.insert(GUI.planets, {name = planet.name, sprite = planet.icon or "unspecified_planet", tooltip = planet.tooltip})
+    end
+  end
 end
 
 ---@param player LuaPlayer
@@ -21,10 +20,25 @@ GUI.make_startup_window = GUI.make_startup_window or function(player)
 end
 
 GUI.close_startup_window = GUI.close_startup_window or function(player)
+  ---@type LuaGuiElement
   local gui = player.gui.center
   if gui.startup_window then
     gui.startup_window.destroy()
   end
+end
+
+GUI.update = function(player, planets)
+  GUI.close_startup_window(player)
+  GUI.setup(planets)
+  GUI.make_startup_window(player)
+end
+
+function gui_click(e)
+  local force = game.forces.player
+  local match = e.element.name:match("start%-on%-(%w+)")
+  if not match then return end
+  PlanetSelect.start_on(match, game.players[e.player_index])
+  GUI.close_startup_window(game.players[e.player_index])
 end
 
 script.on_event(defines.events.on_gui_click, gui_click)

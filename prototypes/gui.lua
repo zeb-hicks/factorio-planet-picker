@@ -13,4 +13,10 @@ styles.select_planet_button = {
   padding = 8,
 }
 
+styles.planet_loading_bar = {
+  type = "progressbar_style",
+  parent = "progressbar",
+  width = 256,
+}
+
 styles.select_planet_button.hovered_graphical_set.glow = nil

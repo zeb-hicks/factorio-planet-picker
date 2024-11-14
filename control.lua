@@ -62,8 +62,8 @@ function player_created(e)
   player.minimap_enabled = false
 
   GUI.setup(PlanetSelect.planets)
-  -- GUI.make_startup_window(player)
   GUI.spawn_loading_screen(player)
+  GUI.make_startup_window(player)
 end
 
 function tick(e)

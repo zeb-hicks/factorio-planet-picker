@@ -118,7 +118,7 @@ end
 
 ---@param e EventData.on_chunk_generated
 function chunk_generated(e)
-  if not PlanetSelect.progress and PlanetSelect.progress[e.surface.name] then return end
+  if not PlanetSelect.progress or not PlanetSelect.progress[e.surface.name] then return end
   local progress = PlanetSelect.progress[e.surface.name].chunks
 
   progress.generated = progress.generated + 1
@@ -132,7 +132,7 @@ end
 ---@param e EventData.on_chunk_charted
 function chunk_charted(e)
   local surface = game.surfaces[e.surface_index]
-  if not PlanetSelect.progress and PlanetSelect.progress[surface.name] then return end
+  if not PlanetSelect.progress or not PlanetSelect.progress[surface.name] then return end
   local progress = PlanetSelect.progress[surface.name].chart
 
   progress.charted = progress.charted + 1

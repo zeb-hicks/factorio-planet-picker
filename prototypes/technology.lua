@@ -63,5 +63,23 @@ data.extend({
       },
       time = 60
     }
+  },
+  {
+    type = "technology",
+    name = "calcite-trigger",
+    icon = "__space-age__/graphics/technology/calcite-processing.png",
+    icon_size = 256,
+    effects = {
+      { type = "unlock-recipe", recipe = "acid-neutralisation" },
+      { type = "unlock-recipe", recipe = "steam-condensation" },
+      { type = "unlock-recipe", recipe = "simple-coal-liquefaction" }
+    },
+    hidden = true,
+    enabled = true,
+    research_trigger = {
+      type = "craft-item",
+      item = "calcite"
+    },
+    prerequisites = { "fluid-handling" },
   }
 })

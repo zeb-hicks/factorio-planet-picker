@@ -22,7 +22,14 @@ data.extend({
   },
   {
     type = "bool-setting",
-    name = "planet-picker-modify-gleba-coal",
+    name = "planet-picker-modify-gleba-centrifugation",
+    setting_type = "startup",
+    default_value = true,
+    order = "g-a"
+  },
+  {
+    type = "bool-setting",
+    name = "planet-picker-modify-gleba-landfill",
     setting_type = "startup",
     default_value = true,
     order = "g-a"

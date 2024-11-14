@@ -83,7 +83,23 @@ remote.add_interface("planet-picker", {
   add_planet = PlanetSelect.add_planet
 })
 
+---@param e EventData.on_research_finished
+function research_finished(e)
+  if e.research.name == "biochamber" then
+    e.research.force.technologies["landfill"].researched = true
+  end
+  if e.research.name == "calcite-trigger" then
+    e.research.force.technologies["calcite-processing"].researched = true
+    e.research.force.technologies["calcite-trigger"].enabled = false
+  end
+  if e.research.name == "calcite-processing" then
+    e.research.force.technologies["calcite-trigger"].researched = true
+    e.research.force.technologies["calcite-trigger"].enabled = false
+  end
+end
+
 script.on_event(defines.events.on_game_created_from_scenario, init)
 script.on_event(defines.events.on_tick, tick)
 script.on_event(defines.events.on_player_created, player_created)
 script.on_event(defines.events.on_runtime_mod_setting_changed, settings_changed)
+script.on_event(defines.events.on_research_finished, research_finished)

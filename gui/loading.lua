@@ -15,7 +15,7 @@ end
 ---@param player LuaPlayer
 GUI.spawn_loading_screen = function(player)
   local gui = player.gui.center
-  local frame = gui.add{type = "frame", name = "loading_screen", caption = "Loading...", style="frame"}
+  local frame = gui.add{type = "frame", name = "loading_screen", caption = "Pre-generating Planet Surfaces...", style="frame"}
   local flow = frame.add{type = "flow", name = "loading_flow", direction = "vertical"}
   local progress_bar = flow.add{type = "progressbar", name = "loading_progress", value = 0, style="planet_loading_bar" }
   -- for _, planet in pairs(PlanetSelect.planets) do

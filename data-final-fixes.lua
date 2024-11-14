@@ -25,7 +25,7 @@ end
 if settings.startup["planet-picker-modify-gleba-centrifugation"] then
   table.insert(data.raw["technology"]["bacteria-cultivation"].effects, {type = "unlock-recipe", recipe = "coal-centrifugation" })
   table.insert(data.raw["technology"]["bacteria-cultivation"].effects, {type = "unlock-recipe", recipe = "calcite-centrifugation" })
-  table.insert(data.raw["technology"]["foundry"].prerequisites, "calcite-trigger")
+  -- table.insert(data.raw["technology"]["foundry"].prerequisites, "calcite-trigger")
 end
 if settings.startup["planet-picker-modify-gleba-landfill"] then
   table.insert(data.raw["technology"]["biochamber"].effects, {type = "unlock-recipe", recipe = "landfill" })

@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.4.3
+Date: 2024-11-19
+  Fixes:
+    - GUI bug causing planet selector to trigger incorrectly
+    - Crash when loading a save with the mod enabled
+    - Removed logging noise
+---------------------------------------------------------------------------------------------------
 Version: 0.4.2
 Date: 2024-11-15
   Fixes:

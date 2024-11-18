@@ -6,7 +6,7 @@ if settings.startup["planet-picker-modify-vulcanus-generator"] then
     name = "thermal-vent",
     icon = "__planet-picker__/graphics/icons/thermal-vent.png",
     icon_size = 512,
-    flags = {"placeable-neutral", "player-creation"},
+    flags = {"placeable-neutral", "player-creation", "not-rotatable"},
     corpse = "big-remnants",
     minable = {mining_time = 1, result = "thermal-vent"},
     max_health = 300,

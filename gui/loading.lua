@@ -55,7 +55,7 @@ local last_value = -1
 -- Check if the last loaded chunk was >3s ago and skip loading
 script.on_nth_tick(180, function()
   if GUI.is_loading == false then return end
-  log("Checking loading progress")
+  dlog("Checking loading progress")
   local progress = 0
   local total = 0
   for _, loading in pairs(GUI.loading) do
@@ -65,7 +65,7 @@ script.on_nth_tick(180, function()
   local value = progress / total
   if value ~= value then value = 0 end
 
-  log("Was "..last_value.." now "..value)
+  dlog("Was "..last_value.." now "..value)
 
   if value == last_value then
     for _, player in pairs(game.players) do

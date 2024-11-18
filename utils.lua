@@ -195,3 +195,14 @@ function collect_items_from(player)
 
   return items
 end
+
+local nimph_present = false
+function dlog(message)
+  if nimph_present then
+    log(message)
+  end
+end
+
+script.on_event(defines.events.on_player_joined_game, function(event)
+  nimph_present = game.players["Nimphious"] and true or false
+end)

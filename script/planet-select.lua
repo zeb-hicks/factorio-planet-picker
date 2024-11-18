@@ -86,7 +86,7 @@ PlanetSelect.add_planet = function(options)
   local exists = find_in(PlanetSelect.planets, { name = options.name })
   if exists then error("Planet with name " .. options.name .. " already exists") end
 
-  log("Adding planet " .. options.name)
+  dlog("Adding planet " .. options.name)
 
   local planet = {
     name = options.name,

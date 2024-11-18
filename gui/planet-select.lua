@@ -28,9 +28,11 @@ GUI.close_startup_window = GUI.close_startup_window or function(player)
 end
 
 GUI.update = function(player, planets)
-  GUI.close_startup_window(player)
-  GUI.setup(planets)
-  GUI.make_startup_window(player)
+  if player.gui.center.startup_window then
+    GUI.close_startup_window(player)
+    GUI.setup(planets)
+    GUI.make_startup_window(player)
+  end
 end
 
 function gui_click(e)

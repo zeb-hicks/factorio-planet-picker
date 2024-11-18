@@ -175,3 +175,23 @@ function nil_chain(table, ...)
   end
   return value
 end
+
+---@param player LuaPlayer
+function collect_items_from(player)
+  local items = {}
+  if not player then return items end
+
+  local main = player.get_inventory(defines.inventory.character_main)
+  local guns = player.get_inventory(defines.inventory.character_guns)
+  local ammo = player.get_inventory(defines.inventory.character_ammo)
+  local armor = player.get_inventory(defines.inventory.character_armor)
+  local trash = player.get_inventory(defines.inventory.character_trash)
+
+  if main then for _, item in pairs(main and main.get_contents()) do table.insert(items, { item = item, inventory = defines.inventory.character_main }) end end
+  if guns then for _, item in pairs(guns and guns.get_contents()) do table.insert(items, { item = item, inventory = defines.inventory.character_guns }) end end
+  if ammo then for _, item in pairs(ammo and ammo.get_contents()) do table.insert(items, { item = item, inventory = defines.inventory.character_ammo }) end end
+  if armor then for _, item in pairs(armor and armor.get_contents()) do table.insert(items, { item = item, inventory = defines.inventory.character_armor }) end end
+  if trash then for _, item in pairs(trash and trash.get_contents()) do table.insert(items, { item = item, inventory = defines.inventory.character_trash }) end end
+
+  return items
+end

@@ -16,6 +16,11 @@ PlanetSelect.start_on = function(planet, player)
 
   local character = surface.create_entity({name = "character", position = position or {0, 0}, force = force})
   player.set_controller({type = defines.controllers.character, character = character})
+  storage.inventories = storage.inventories or {}
+  if storage.inventories[player.index] == nil then
+    local items = collect_items_from(player)
+    storage.inventories[player.index] = items
+  end
   for _, item in pairs(storage.inventories[player.index]) do
     player.get_inventory(item.inventory).insert(item.item)
   end

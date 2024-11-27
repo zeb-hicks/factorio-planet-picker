@@ -66,6 +66,7 @@ script.on_nth_tick(180, function()
   if value ~= value then value = 0 end
 
   dlog("Was "..last_value.." now "..value)
+  dlog("Loaded "..progress.."/"..total)
 
   if value == last_value then
     for _, player in pairs(game.players) do

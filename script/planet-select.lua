@@ -12,6 +12,15 @@ PlanetSelect.start_on = function(planet, player)
 
   unlock_planet_technology(force, surface)
 
+  dlog("Starting on " .. planet)
+  local planet_data = find_in(PlanetSelect.planets, { name = planet })
+  if planet_data ~= nil then
+    dlog("Planet data found for " .. planet)
+    planet_data = PlanetSelect.planets[planet_data]
+    dlog(serpent.block(planet_data))
+    if planet_data.callback then planet_data.callback(player, planet_data.first) end
+  end
+
   player.teleport(position, surface)
 
   local character = surface.create_entity({name = "character", position = position or {0, 0}, force = force})
@@ -71,12 +80,37 @@ PlanetSelect.setup_force = function()
   game.forces.picking_planet.disable_all_prototypes()
 end
 
+---@param player LuaPlayer
+---@param first boolean
+function gleba_setup(player, first)
+  dlog("Setting up Gleba")
+
+end
+
+---@param player LuaPlayer
+---@param first boolean
+function fulgora_setup(player, first)
+  dlog("Setting up Fulgora")
+
+end
+
+---@param player LuaPlayer
+---@param first boolean
+function vulcanus_setup(player, first)
+  dlog("Setting up Vulcanus via callback")
+  for _, force in pairs(game.forces) do
+    dlog("Unlocking acid processing for "..force.name.." force")
+    force.technologies["acid-processing"].enabled = true
+    force.recipes["thermal-vent"].enabled = true
+  end
+end
+
 PlanetSelect.planets = {
-  { name = "nauvis", tooltip = "Nauvis", icon = "nauvis", surface = "nauvis" },
-  { name = "gleba", tooltip = "Gleba", icon = "gleba", surface = "gleba" },
-  { name = "fulgora", tooltip = "Fulgora", icon = "fulgora", surface = "fulgora" },
-  { name = "vulcanus", tooltip = "Vulcanus", icon = "vulcanus", surface = "vulcanus" },
-  { name = "aquilo", tooltip = "Aquilo", icon = "aquilo", surface = "aquilo" },
+  { name = "nauvis", tooltip = "Nauvis", icon = "nauvis", surface = "nauvis", first = true },
+  { name = "gleba", tooltip = "Gleba", icon = "gleba", surface = "gleba", first = true, callback = gleba_setup },
+  { name = "fulgora", tooltip = "Fulgora", icon = "fulgora", surface = "fulgora", first = true, callback = fulgora_setup },
+  { name = "vulcanus", tooltip = "Vulcanus", icon = "vulcanus", surface = "vulcanus", first = true, callback = vulcanus_setup },
+  { name = "aquilo", tooltip = "Aquilo", icon = "aquilo", surface = "aquilo", first = true },
 }
 
 PlanetSelect.add_planet = function(options)
@@ -92,6 +126,7 @@ PlanetSelect.add_planet = function(options)
     name = options.name,
     surface = options.surface,
     icon = options.icon or "unspecified_planet",
+    first = true,
     callback = options.callback or function() end
   }
 
@@ -145,18 +180,6 @@ function chunk_charted(e)
 end
 script.on_event(defines.events.on_chunk_generated, chunk_generated)
 script.on_event(defines.events.on_chunk_charted, chunk_charted)
-
-function gleba_setup()
-
-end
-
-function fulgora_setup()
-
-end
-
-function vulcanus_setup()
-
-end
 
 function moved_surface(e)
   if not game.surfaces["empty_void"] then return end

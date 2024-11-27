@@ -111,7 +111,7 @@ end
 PlanetSelect.progress = {}
 
 PlanetSelect.enable_planet = function(name)
-  local radius = 8
+  local radius = 5
   game.planets[name].create_surface()
   game.surfaces[name].request_to_generate_chunks({0, 0}, radius)
   local area = (radius * 2 + 1) ^ 2

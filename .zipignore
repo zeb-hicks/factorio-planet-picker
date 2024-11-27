@@ -1,0 +1,6 @@
+.gitignore
+.zipignore
+.vscode
+.git
+raws
+package.sh

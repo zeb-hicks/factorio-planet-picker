@@ -20,7 +20,7 @@ data.extend({
       { type = "unlock-recipe", recipe = "oil-refinery" },
       { type = "unlock-recipe", recipe = "simple-coal-liquefaction" },
     },
-    prerequisites = { "planet-discovery-vulcanus" },
+    prerequisites = { "planet-discovery-vulcanus", "fluid-handling" },
     research_trigger = {
       type = "build-entity",
       entity = "pumpjack",

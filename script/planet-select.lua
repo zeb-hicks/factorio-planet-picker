@@ -8,7 +8,10 @@ PlanetSelect.start_on = function(planet, player)
   player.minimap_enabled = true
 
   local surface = game.surfaces[planet]
+  if surface == nil then return end
+
   local position = surface.find_non_colliding_position("character", force.get_spawn_position(surface), surface.get_starting_area_radius(), 2)
+  if position == nil then return end
 
   unlock_planet_technology(force, surface)
 
@@ -182,12 +185,20 @@ script.on_event(defines.events.on_chunk_generated, chunk_generated)
 script.on_event(defines.events.on_chunk_charted, chunk_charted)
 
 function moved_surface(e)
-  if not game.surfaces["empty_void"] then return end
   local player = game.players[e.player_index]
   local surface = game.surfaces[e.surface_index]
+  if not game.surfaces["empty_void"] then
+    dlog(player.name.." changed surface but couldn't find the empty_void surface!")
+    return
+  end
 
   if not player.controller_type == defines.controllers.character then return end
   if surface.name == "empty_void" then return end
+  local lab_prefix = "bpsb-lab"
+  if surface.name:sub(1, #lab_prefix) == lab_prefix then
+    dlog("Player switching surface from a lab.")
+    return
+  end
 
   unlock_planet_technology(player.force, surface)
   player.force.set_surface_hidden(surface, false)

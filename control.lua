@@ -18,7 +18,9 @@ end
 
 ---@param e EventData.on_runtime_mod_setting_changed
 function settings_changed(e)
-  GUI.update(game.players[e.player_index], PlanetSelect.planets)
+  if e.player_index ~= nil then
+    GUI.update(game.players[e.player_index], PlanetSelect.planets)
+  end
 end
 
 function ensure_setup()

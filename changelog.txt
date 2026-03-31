@@ -1,19 +1,30 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.4.4
+Date: 2026-04-01
+  Changes:
+    - Altered calcite technology and added trigger to avoid showing it in awkward situations
+    - Added technology for geothermal generator so it only appears when it's useful
+    - Changed the loc strings to align better with the vanilla strings
+    - Proper tracking for first player spawns on planets for remote script interface
+  Bugfixes:
+    - Fixed a crash when other mods/scripts changed mod settings
+    - Removed logging for preload script
+---------------------------------------------------------------------------------------------------
 Version: 0.4.3
 Date: 2024-11-19
-  Fixes:
+  Bugfixes:
     - GUI bug causing planet selector to trigger incorrectly
     - Crash when loading a save with the mod enabled
     - Removed logging noise
 ---------------------------------------------------------------------------------------------------
 Version: 0.4.2
 Date: 2024-11-15
-  Fixes:
+  Bugfixes:
     - More fixes to the loading check
 ---------------------------------------------------------------------------------------------------
 Version: 0.4.1
 Date: 2024-11-15
-  Fixes:
+  Bugfixes:
     - Fixed a loading issue where the chunks loaded would not be the same as chunks queued for generation
 ---------------------------------------------------------------------------------------------------
 Version: 0.4.0
@@ -29,14 +40,14 @@ Date: 2024-11-14
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.2
 Date: 2024-11-12
-  Fixes:
+  Bugfixes:
     - Locale fixes
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.1
 Date: 2024-11-12
   Changes:
     - Added Ice Melting technology to Fulgora start as a source of water
-  Fixes:
+  Bugfixes:
     - Fixed a setting misconfiguration for Vulcanus and Fulgora
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.0
@@ -48,14 +59,14 @@ Date: 2024-11-12
     - Moved the Chemical Plant and Refinery unlocks to the Fluid Handling technology
     - Removed steel from and adjusted the Thermal Vent recipe since it's no longer needed anywhere else
     - Removed the carbon steel smelting chain and alternate recipes as they're no longer necessary
-  Fixes:
+  Bugfixes:
     - Fixed some issues with the patching of the oil dependency technology
     - Fixed a crash where the thermal vent prototype would reference sounds without nil checking
     - Fixed several other potential crashes
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.1
 Date: 2024-11-06
-  Fixes:
+  Bugfixes:
     - Removed the oil dependency from fluid handling for Vulcanus progression
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.0

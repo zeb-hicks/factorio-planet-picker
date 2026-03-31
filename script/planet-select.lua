@@ -22,6 +22,7 @@ PlanetSelect.start_on = function(planet, player)
     planet_data = PlanetSelect.planets[planet_data]
     dlog(serpent.block(planet_data))
     if planet_data.callback then planet_data.callback(player, planet_data.first) end
+    planet_data.first = false
   end
 
   player.teleport(position, surface)
@@ -86,25 +87,23 @@ end
 ---@param player LuaPlayer
 ---@param first boolean
 function gleba_setup(player, first)
-  dlog("Setting up Gleba")
 
 end
 
 ---@param player LuaPlayer
 ---@param first boolean
 function fulgora_setup(player, first)
-  dlog("Setting up Fulgora")
 
 end
 
 ---@param player LuaPlayer
 ---@param first boolean
 function vulcanus_setup(player, first)
-  dlog("Setting up Vulcanus via callback")
   for _, force in pairs(game.forces) do
     dlog("Unlocking acid processing for "..force.name.." force")
     force.technologies["acid-processing"].enabled = true
-    force.recipes["thermal-vent"].enabled = true
+    -- force.technologies["geothermal-power"].enabled = true
+    -- force.recipes["thermal-vent"].enabled = true
   end
 end
 

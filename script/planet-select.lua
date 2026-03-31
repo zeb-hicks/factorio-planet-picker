@@ -195,3 +195,21 @@ function chunk_charted(e)
 end
 script.on_event(defines.events.on_chunk_generated, chunk_generated)
 script.on_event(defines.events.on_chunk_charted, chunk_charted)
+
+function moved_surface(e)
+  if e.player_index == nil or e.surface_index == nil then return end
+  local player = game.players[e.player_index]
+  if not player.controller_type == defines.controllers.character then return end
+
+  local surface = player.surface
+  local planet = PlanetSelect.planets[find_in(PlanetSelect.planets, { name = surface.name })]
+
+  if planet ~= nil then
+    -- Make sure the planet we're visiting is not hidden from the surface view.
+    player.force.set_surface_hidden(surface, false);
+    -- Make sure we unlock the tech for this planet.
+    unlock_planet_technology(player.force, surface)
+  end
+end
+
+script.on_event(defines.events.on_player_changed_surface, moved_surface)

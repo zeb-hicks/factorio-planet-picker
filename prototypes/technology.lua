@@ -14,7 +14,7 @@ data.extend({
         shift = { 24, 24 },
       },
     },
-    enabled = false,
+    enabled = true,
     icon_size = 128,
     effects = {
       { type = "unlock-recipe", recipe = "oil-refinery" },

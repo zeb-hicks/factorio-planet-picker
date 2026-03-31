@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.0
+Date: 2026-04-01
+  Features:
+    - Automatically detect modded planets and add them to the planet list (disabled by default)
+  Bugfixes:
+    - Fixed Nauvis not showing up in remote view after reaching it when starting from another planet
+---------------------------------------------------------------------------------------------------
 Version: 0.4.5
 Date: 2026-04-01
   Bugfixes:

@@ -3,4 +3,5 @@
 .vscode
 .git
 raws
+info.md
 package.sh

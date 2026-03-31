@@ -49,3 +49,16 @@ end
 if settings.startup["planet-picker-modify-fulgora-ice"] then
   table.insert(data.raw["technology"]["fluid-handling"].effects, {type = "unlock-recipe", recipe = "ice-melting" })
 end
+
+if settings.startup["planet-picker-modded-planets"] then
+  for n,p in pairs(data.raw["planet"]) do
+    data.extend({{
+      type = "sprite",
+      name = "planet-picker-"..n,
+      filename = p.starmap_icon,
+      size = p.starmap_icon_size,
+      scale = 1.0,
+      priority = "high",
+    }})
+  end
+end

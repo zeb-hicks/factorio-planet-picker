@@ -3,8 +3,14 @@ GUI.planets = GUI.planets or {}
 GUI.setup = function(planets)
   GUI.planets = {}
   for _, planet in pairs(planets) do
-    if settings.global["planet-picker-"..planet.name].value then
-      table.insert(GUI.planets, {name = planet.name, sprite = planet.icon or "unspecified_planet", tooltip = planet.tooltip})
+    if settings.global["planet-picker-"..planet.name] ~= nil then
+      if settings.global["planet-picker-"..planet.name].value then
+        table.insert(GUI.planets, {name = planet.name, sprite = planet.icon or "unspecified_planet", tooltip = planet.tooltip})
+      end
+    else
+      if settings.global["planet-picker-modded-start"].value and settings.global["planet-picker-modded-planets"].value then
+        table.insert(GUI.planets, {name = planet.name, sprite = "planet-picker-"..planet.name, tooltip = planet.name:sub(1,1):upper()..planet.name:sub(2)})
+      end
     end
   end
 end

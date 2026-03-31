@@ -1,10 +1,10 @@
 data.extend({
   {
     type = "bool-setting",
-    name = "planet-picker-modify-fulgora-ruins",
+    name = "planet-picker-modded-planets",
     setting_type = "startup",
-    default_value = true,
-    order = "f-a"
+    default_value = false,
+    order = "a-a",
   },
   {
     type = "bool-setting",
@@ -96,5 +96,12 @@ data.extend({
     setting_type = "runtime-global",
     default_value = false,
     order = "p-e"
+  },
+  {
+    type = "bool-setting",
+    name = "planet-picker-modded-start",
+    setting_type = "runtime-global",
+    default_value = false,
+    order = "z-z"
   },
 })

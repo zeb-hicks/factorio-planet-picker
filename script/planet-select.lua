@@ -140,6 +140,19 @@ end
 PlanetSelect.setup_planets = function()
   game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
 
+  if settings.startup["planet-picker-modded-planets"] then
+    for n, p in pairs(game.planets) do
+      if not find_in(PlanetSelect.planets, { name = n }) then
+        PlanetSelect.add_planet({
+          name = n,
+          tooltip = n:sub(1,1):upper()..n:sub(2),
+          icon = "planet-picker-"..n,
+          surface = n,
+        })
+      end
+    end
+  end
+
   for _, planet in pairs(PlanetSelect.planets) do
     PlanetSelect.enable_planet(planet.name)
   end

@@ -183,24 +183,28 @@ end
 script.on_event(defines.events.on_chunk_generated, chunk_generated)
 script.on_event(defines.events.on_chunk_charted, chunk_charted)
 
-function moved_surface(e)
-  local player = game.players[e.player_index]
-  local surface = game.surfaces[e.surface_index]
-  if not game.surfaces["empty_void"] then
-    dlog(player.name.." changed surface but couldn't find the empty_void surface!")
-    return
-  end
+-- function moved_surface(e)
+--   if e.player_index == nil or e.surface_index == nil then
+--     dlog("A player changed surface but the player or surface was nil!")
+--     return
+--   end
+--   local player = game.players[e.player_index]
+--   local surface = game.surfaces[e.surface_index]
+--   if not game.surfaces["empty_void"] then
+--     dlog(player.name.." changed surface but couldn't find the empty_void surface!")
+--     return
+--   end
 
-  if not player.controller_type == defines.controllers.character then return end
-  if surface.name == "empty_void" then return end
-  local lab_prefix = "bpsb-lab"
-  if surface.name:sub(1, #lab_prefix) == lab_prefix then
-    dlog("Player switching surface from a lab.")
-    return
-  end
+--   if not player.controller_type == defines.controllers.character then return end
+--   if surface.name == "empty_void" then return end
+--   local lab_prefix = "bpsb-lab"
+--   if surface.name:sub(1, #lab_prefix) == lab_prefix then
+--     dlog("Player switching surface from a lab.")
+--     return
+--   end
 
-  unlock_planet_technology(player.force, surface)
-  player.force.set_surface_hidden(surface, false)
-end
+--   unlock_planet_technology(player.force, surface)
+--   player.force.set_surface_hidden(surface, false)
+-- end
 
-script.on_event(defines.events.on_player_changed_surface, moved_surface)
+-- script.on_event(defines.events.on_player_changed_surface, moved_surface)

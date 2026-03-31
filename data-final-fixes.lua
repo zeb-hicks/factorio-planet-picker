@@ -10,8 +10,6 @@ or settings.startup["planet-picker-modify-fulgora-sulfur"] then
   extricate_technology("oil-processing")
   hide_technology("oil-gathering")
   hide_technology("oil-processing")
-
-  data.raw["technology"]["calcite-processing"].prerequisites = { "fluid-handling" }
 end
 
 if settings.startup["planet-picker-modify-fulgora-sulfur"] then

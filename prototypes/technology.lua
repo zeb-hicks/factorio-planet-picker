@@ -28,6 +28,32 @@ data.extend({
   },
   {
     type = "technology",
+    name = "geothermal-power",
+    icons = {
+      {
+        icon = "__base__/graphics/technology/steam-power.png",
+        icon_size = 256,
+      },
+      {
+        icon = "__base__/graphics/icons/fluid/sulfuric-acid.png",
+        icon_size = 64,
+        scale = 1.0,
+        shift = { 24, 24 },
+      },
+    },
+    enabled = true,
+    icon_size = 128,
+    effects = {
+      { type = "unlock-recipe", recipe = "thermal-vent" },
+    },
+    prerequisites = { "planet-discovery-vulcanus" },
+    research_trigger = {
+      type = "mine-entity",
+      entity = "vulcanus-chimney",
+    }
+  },
+  {
+    type = "technology",
     name = "planet-discovery-nauvis",
     icons = {
       {

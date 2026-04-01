@@ -16,19 +16,7 @@ If you want to use an unsupported modded planet, enable the mod setting to selec
 
 ![Settings](https://i.imgur.com/YW4qbOE.png)
 
-Mod authors can use the provided remote interface to add their planet to the GUI by default.
-
-The remote interface exposes a function `add_planet(name, callback)` where you provide the name of the planet (which should be identical to the planet's name in the game planet table) and a callback function with the signature `callback(player: LuaPlayer, first: bool)`
-
-```lua
-function earth_setup(player, first)
-  for _, force in pairs(game.forces) do
-    force.technologies["flint-knapping"].enabled = true
-  end
-end
-
-remote.call("planet-picker", "add_planet", "earth", earth_setup)
-```
+There is a remote interface for providing your own planet to hook into the GUI, but it has some issue currently. The next release should see the API stabilize with some utilities for manipulating the tech tree, since Planet Picker does most of its work when the data phase is already finished, there are limitations and complications. Stay tuned.
 
 ### Technology
  - Fluid handling now unlocks the chemical plant and refinery, which make it possible to automate things without excessive tech tree changes for planets without resource patches on which to place pumpjacks.

@@ -1,13 +1,6 @@
 data.extend({
   {
     type = "bool-setting",
-    name = "planet-picker-modded-planets",
-    setting_type = "startup",
-    default_value = false,
-    order = "a-a",
-  },
-  {
-    type = "bool-setting",
     name = "planet-picker-modify-fulgora-ice",
     setting_type = "startup",
     default_value = true,
@@ -99,9 +92,9 @@ data.extend({
   },
   {
     type = "bool-setting",
-    name = "planet-picker-modded-start",
+    name = "planet-picker-modded-planets",
     setting_type = "runtime-global",
     default_value = false,
-    order = "z-z"
+    order = "p-z"
   },
 })

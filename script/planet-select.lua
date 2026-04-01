@@ -140,7 +140,7 @@ end
 PlanetSelect.setup_planets = function()
   game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
 
-  if settings.startup["planet-picker-modded-planets"] then
+  if settings.global["planet-picker-modded-planets"] then
     for n, p in pairs(game.planets) do
       if not find_in(PlanetSelect.planets, { name = n }) then
         PlanetSelect.add_planet({

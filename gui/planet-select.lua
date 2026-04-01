@@ -8,7 +8,7 @@ GUI.setup = function(planets)
         table.insert(GUI.planets, {name = planet.name, sprite = planet.icon or "unspecified_planet", tooltip = planet.tooltip})
       end
     else
-      if settings.global["planet-picker-modded-start"].value and settings.global["planet-picker-modded-planets"].value then
+      if settings.global["planet-picker-modded-planets"].value then
         table.insert(GUI.planets, {name = planet.name, sprite = "planet-picker-"..planet.name, tooltip = planet.name:sub(1,1):upper()..planet.name:sub(2)})
       end
     end

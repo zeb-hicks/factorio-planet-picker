@@ -6,7 +6,7 @@ GUI.setup = function(planets)
     local planet_setting = settings.global["planet-picker-"..planet.name]
     if planet_setting ~= nil then
       if planet_setting.value then
-        table.insert(GUI.planets, {name = planet.name, sprite = planet.icon or "unspecified_planet", tooltip = planet.tooltip})
+          table.insert(GUI.planets, {name = planet.name, sprite = planet.icon or "unspecified-planet", tooltip = planet.tooltip})
       end
     else
       if settings.global["planet-picker-modded-planets"].value then

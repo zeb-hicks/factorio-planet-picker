@@ -54,7 +54,10 @@ data.extend({
     setting_type = "startup",
     default_value = true,
     order = "v-d"
-  },
+  }
+})
+
+data.extend({
   {
     type = "bool-setting",
     name = "planet-picker-nauvis",
@@ -90,6 +93,9 @@ data.extend({
     default_value = false,
     order = "p-e"
   },
+})
+
+data.extend({
   {
     type = "bool-setting",
     name = "planet-picker-modded-planets",

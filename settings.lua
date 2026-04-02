@@ -103,4 +103,12 @@ data.extend({
     default_value = false,
     order = "p-z"
   },
+  {
+    type = "string-setting",
+    name = "planet-picker-blacklist",
+    setting_type = "startup",
+    default_value = "",
+    order = "z-z",
+    allow_blank = true,
+  },
 })

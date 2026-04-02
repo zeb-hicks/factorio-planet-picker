@@ -121,6 +121,7 @@ PlanetSelect.planets = {
 PlanetSelect.add_planet = function(options)
   if not options or type(options) ~= "table" then error("add_planet expects a table of options defining the new planet") end
   if not options.name then error("add_planet requires a name parameter") end
+  if blacklisted(options.name) then return end
   if not options.surface then error("add_planet requires a surface parameter") end
   local exists = find_in(PlanetSelect.planets, { name = options.name })
   if exists then
@@ -149,7 +150,7 @@ PlanetSelect.setup_planets = function()
 
   if settings.global["planet-picker-modded-planets"] then
     for n, p in pairs(game.planets) do
-      if not find_in(PlanetSelect.planets, { name = n }) then
+      if not find_in(PlanetSelect.planets, { name = n }) and not blacklisted(n) then
         PlanetSelect.add_planet({
           name = n,
           tooltip = n:sub(1,1):upper()..n:sub(2),

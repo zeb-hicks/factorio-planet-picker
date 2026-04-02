@@ -50,13 +50,17 @@ if settings.startup["planet-picker-modify-fulgora-ice"] then
   table.insert(data.raw["technology"]["fluid-handling"].effects, {type = "unlock-recipe", recipe = "ice-melting" })
 end
 
+local blacklist = get_blacklist()
+
 for n,p in pairs(data.raw["planet"]) do
-  data.extend({{
-    type = "sprite",
-    name = "planet-picker-"..n,
-    filename = p.starmap_icon,
-    size = p.starmap_icon_size,
-    scale = 1.0,
-    priority = "high",
-  }})
+  if p.starmap_icon ~= nil and p.starmap_icon_size ~= nil and not blacklisted(n) then
+    data.extend({{
+      type = "sprite",
+      name = "planet-picker-"..n,
+      filename = p.starmap_icon,
+      size = p.starmap_icon_size,
+      scale = 1.0,
+      priority = "no-atlas",
+    }})
+  end
 end

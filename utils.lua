@@ -57,6 +57,14 @@ function remove_recipes(recipes)
   end
 end
 
+function table_contains(table, value)
+  for i,v in pairs(table) do
+    if v == value then
+      return i
+    end
+  end
+end
+
 function find_in(table, key)
   if type(key) == "string" then
     for k, v in pairs(table) do
@@ -194,6 +202,26 @@ function collect_items_from(player)
   if trash then for _, item in pairs(trash and trash.get_contents()) do table.insert(items, { item = item, inventory = defines.inventory.character_trash }) end end
 
   return items
+end
+
+function get_blacklist()
+  -- String setting is always of type string.
+  ---@type string
+  ---@diagnostic disable-next-line: assign-type-mismatch
+  local s = settings.startup["planet-picker-blacklist"].value
+  local list = {}
+  for str in s:gmatch("([^,]+)") do
+    table.insert(list, str)
+  end
+  return list
+end
+
+_pp_blacklist = get_blacklist()
+
+function blacklisted(planet)
+  local is_blacklisted = table_contains(_pp_blacklist, planet) ~= nil
+  -- dlog("Checking if "..planet.." is blacklisted: "..serpent.block(is_blacklisted))
+  return is_blacklisted
 end
 
 function dlog(message)

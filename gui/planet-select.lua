@@ -9,9 +9,14 @@ GUI.setup = function(planets)
           table.insert(GUI.planets, {name = planet.name, sprite = planet.icon or "unspecified-planet", tooltip = planet.tooltip})
       end
     else
+        local sprite = "planet-picker-"..planet.name
+        if not helpers.is_valid_sprite_path(sprite) then
+          sprite = "unspecified-planet"
+        end
       if settings.global["planet-picker-modded-planets"].value then
-        table.insert(GUI.planets, {name = planet.name, sprite = "planet-picker-"..planet.name, tooltip = planet.name:sub(1,1):upper()..planet.name:sub(2)})
+          table.insert(GUI.planets, {name = planet.name, sprite = sprite, tooltip = planet.name:sub(1,1):upper()..planet.name:sub(2)})
       elseif planet.auto then
+          table.insert(GUI.planets, {name = planet.name, sprite = sprite, tooltip = planet.name:sub(1,1):upper()..planet.name:sub(2)})
         table.insert(GUI.planets, {name = planet.name, sprite = "planet-picker-"..planet.name, tooltip = planet.name:sub(1,1):upper()..planet.name:sub(2)})
       end
     end

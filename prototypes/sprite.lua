@@ -41,8 +41,8 @@ data.extend({
   },
   {
     type = "sprite",
-    name = "unspecified_planet",
-    filename = "__planet-picker__/graphics/icons/unspecified_planet.png",
+    name = "unspecified-planet",
+    filename = "__planet-picker__/graphics/icons/unspecified-planet.png",
     size = 512,
     scale = 1.0,
     priority = "high",

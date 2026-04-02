@@ -22,6 +22,9 @@ PlanetSelect.start_on = function(planet, player)
     planet_data = PlanetSelect.planets[planet_data]
     dlog(serpent.block(planet_data))
     if planet_data.callback then planet_data.callback(player, planet_data.first) end
+    if planet_data.remote then
+      remote.call(planet_data.remote.interface, planet_data.remote.fn, player, planet_data.first)
+    end
     planet_data.first = false
   end
 
@@ -120,7 +123,10 @@ PlanetSelect.add_planet = function(options)
   if not options.name then error("add_planet requires a name parameter") end
   if not options.surface then error("add_planet requires a surface parameter") end
   local exists = find_in(PlanetSelect.planets, { name = options.name })
-  if exists then error("Planet with name " .. options.name .. " already exists") end
+  if exists then
+    dlog("Planet with name " .. options.name .. " already exists! Overwriting planet definition...")
+    table.remove(PlanetSelect.planets, exists)
+  end
 
   dlog("Adding planet " .. options.name)
 
@@ -129,7 +135,8 @@ PlanetSelect.add_planet = function(options)
     surface = options.surface,
     icon = options.icon or "unspecified_planet",
     first = true,
-    callback = options.callback or function() end
+    callback = options.callback or nil,
+    remote = options.remote or nil
   }
 
   table.insert(PlanetSelect.planets, planet)
@@ -148,6 +155,7 @@ PlanetSelect.setup_planets = function()
           tooltip = n:sub(1,1):upper()..n:sub(2),
           icon = "planet-picker-"..n,
           surface = n,
+          auto = true,
         })
       end
     end

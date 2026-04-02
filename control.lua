@@ -62,10 +62,6 @@ function tick(e)
   end
 end
 
-remote.add_interface("planet-picker", {
-  add_planet = PlanetSelect.add_planet
-})
-
 ---@param e EventData.on_research_finished
 function research_finished(e)
   if e.research.name == "biochamber" then

@@ -145,6 +145,10 @@ PlanetSelect.add_planet = function(options)
   PlanetSelect.enable_planet(options.name)
 end
 
+remote.add_interface("planet-picker", {
+  add_planet = PlanetSelect.add_planet
+})
+
 PlanetSelect.setup_planets = function()
   game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
 

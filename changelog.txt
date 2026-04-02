@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.2
+Date: 2026-04-02
+  Features:
+    - Added a blacklist to prevent specifica planets from being processed and displayed
+  Bugfixes:
+    - Fixed crash when attempting to display planets with invalid icons
+---------------------------------------------------------------------------------------------------
 Version: 0.5.1
 Date: 2026-04-01
   Bugfixes:

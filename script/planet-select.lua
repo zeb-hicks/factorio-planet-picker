@@ -1,6 +1,17 @@
 require("utils")
 
+---@class PlanetSelect
+---@field planets  PlanetSelectorDefinition[]
+---@field api_planets  PlanetSelectorDefinition[]
+---@field vanilla_planets  PlanetSelectorDefinition[]
+---@field add_planet  function
+---@field create_empty_void  function
+---@field enable_planet  function
+---@field reload_planets  function
+---@field setup_force  function
+---@field start_on  function
 PlanetSelect = PlanetSelect or {}
+PlanetSelect.planets = PlanetSelect.planets or {}
 
 PlanetSelect.start_on = function(planet, player)
   local force = game.forces.player;
@@ -10,17 +21,18 @@ PlanetSelect.start_on = function(planet, player)
   local surface = game.surfaces[planet]
   if surface == nil then return end
 
-  local position = surface.find_non_colliding_position("character", force.get_spawn_position(surface), surface.get_starting_area_radius(), 2)
+  local position = surface.find_non_colliding_position("character", force.get_spawn_position(surface),
+    surface.get_starting_area_radius(), 2)
   if position == nil then return end
 
   unlock_planet_technology(force, surface)
 
-  dlog("Starting on " .. planet)
+  if DEBUG then log("Starting on " .. planet) end
   local planet_data = find_in(PlanetSelect.planets, { name = planet })
   if planet_data ~= nil then
-    dlog("Planet data found for " .. planet)
+    if DEBUG then log("Planet data found for " .. planet) end
     planet_data = PlanetSelect.planets[planet_data]
-    dlog(serpent.block(planet_data))
+    if DEBUG then log(serpent.block(planet_data)) end
     if planet_data.callback then planet_data.callback(player, planet_data.first) end
     if planet_data.remote then
       remote.call(planet_data.remote.interface, planet_data.remote.fn, player, planet_data.first)
@@ -30,8 +42,8 @@ PlanetSelect.start_on = function(planet, player)
 
   player.teleport(position, surface)
 
-  local character = surface.create_entity({name = "character", position = position or {0, 0}, force = force})
-  player.set_controller({type = defines.controllers.character, character = character})
+  local character = surface.create_entity({ name = "character", position = position or { 0, 0 }, force = force })
+  player.set_controller({ type = defines.controllers.character, character = character })
   storage.inventories = storage.inventories or {}
   if storage.inventories[player.index] == nil then
     local items = collect_items_from(player)
@@ -53,10 +65,10 @@ PlanetSelect.create_empty_void = function()
     autoplace_controls = {},
     default_enable_all_autoplace_controls = false,
     water = "none",
-    cliff_settings = {cliff_elevation_0 = 0, cliff_elevation_interval = 0, name = "cliff", richness = 0, control = "cliff", cliff_smoothing = 0},
-    starting_points = {{x = 0, y = 0}},
+    cliff_settings = { cliff_elevation_0 = 0, cliff_elevation_interval = 0, name = "cliff", richness = 0, control = "cliff", cliff_smoothing = 0 },
+    starting_points = { { x = 0, y = 0 } },
     territory_settings = {
-      units = {""},
+      units = { "" },
       territory_variation_expression = "",
       minimum_territory_size = 0,
       territory_index_expression = ""
@@ -67,7 +79,7 @@ PlanetSelect.create_empty_void = function()
   -- surface.generate_with_lab_tiles = true
   for x = -125, 125 do
     for y = -125, 125 do
-      surface.set_tiles({{position = {x, y}, name = "empty-space" }})
+      surface.set_tiles({ { position = { x, y }, name = "empty-space" } })
     end
   end
 end
@@ -89,35 +101,40 @@ end
 
 ---@param player LuaPlayer
 ---@param first boolean
-function gleba_setup(player, first)
-
-end
-
----@param player LuaPlayer
----@param first boolean
-function fulgora_setup(player, first)
-
-end
-
----@param player LuaPlayer
----@param first boolean
 function vulcanus_setup(player, first)
   for _, force in pairs(game.forces) do
-    dlog("Unlocking acid processing for "..force.name.." force")
+    if DEBUG then log("Unlocking acid processing for " .. force.name .. " force") end
     force.technologies["acid-processing"].enabled = true
-    -- force.technologies["geothermal-power"].enabled = true
-    -- force.recipes["thermal-vent"].enabled = true
   end
 end
 
-PlanetSelect.planets = {
-  { name = "nauvis", tooltip = "Nauvis", icon = "nauvis", surface = "nauvis", first = true },
-  { name = "gleba", tooltip = "Gleba", icon = "gleba", surface = "gleba", first = true, callback = gleba_setup },
-  { name = "fulgora", tooltip = "Fulgora", icon = "fulgora", surface = "fulgora", first = true, callback = fulgora_setup },
+---@class PlanetSelectorRemoteCallback
+---@field interface string Remote interface name to be called
+---@field fn string Function on the remote interface to call when a player starts on this planet
+
+---@class PlanetSelectorDefinition
+---@field name string Planet Name
+---@field tooltip string|nil Tooltip shown on hover
+---@field icon string|nil Icon sprite name
+---@field surface string Planet surface name
+---@field first boolean|nil Whether the next player to drop here will be the first
+---@field callback function|nil Function called when a player starts on this planet
+---@field remote PlanetSelectorRemoteCallback|nil
+---@field auto boolean|nil Whether this planet was auto-generated from a prototype
+
+---@type PlanetSelectorDefinition[]
+PlanetSelect.vanilla_planets = {
+  { name = "nauvis",   tooltip = "Nauvis",   icon = "nauvis",   surface = "nauvis",   first = true },
+  { name = "gleba",    tooltip = "Gleba",    icon = "gleba",    surface = "gleba",    first = true },
+  { name = "fulgora",  tooltip = "Fulgora",  icon = "fulgora",  surface = "fulgora",  first = true },
   { name = "vulcanus", tooltip = "Vulcanus", icon = "vulcanus", surface = "vulcanus", first = true, callback = vulcanus_setup },
-  { name = "aquilo", tooltip = "Aquilo", icon = "aquilo", surface = "aquilo", first = true },
+  { name = "aquilo",   tooltip = "Aquilo",   icon = "aquilo",   surface = "aquilo",   first = true },
 }
 
+---@type PlanetSelectorDefinition[]
+PlanetSelect.api_planets = {}
+
+---@param options PlanetSelectorDefinition
 PlanetSelect.add_planet = function(options)
   if not options or type(options) ~= "table" then error("add_planet expects a table of options defining the new planet") end
   if not options.name then error("add_planet requires a name parameter") end
@@ -125,19 +142,21 @@ PlanetSelect.add_planet = function(options)
   if not options.surface then error("add_planet requires a surface parameter") end
   local exists = find_in(PlanetSelect.planets, { name = options.name })
   if exists then
-    dlog("Planet with name " .. options.name .. " already exists! Overwriting planet definition...")
+    if DEBUG then log("Planet with name " .. options.name .. " already exists! Overwriting planet definition...") end
     table.remove(PlanetSelect.planets, exists)
   end
 
-  dlog("Adding planet " .. options.name)
+  if DEBUG then log("Adding planet " .. options.name) end
 
+  ---@type PlanetSelectorDefinition
   local planet = {
     name = options.name,
     surface = options.surface,
     icon = options.icon or "unspecified-planet",
     first = true,
     callback = options.callback or nil,
-    remote = options.remote or nil
+    remote = options.remote or nil,
+    auto = options.auto or nil,
   }
 
   table.insert(PlanetSelect.planets, planet)
@@ -149,80 +168,83 @@ remote.add_interface("planet-picker", {
   add_planet = PlanetSelect.add_planet
 })
 
-PlanetSelect.setup_planets = function()
-  game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
+PlanetSelect.reload_planets = function()
+  PlanetSelect.planets = {}
+  for n, p in pairs(game.planets) do
+    if not blacklisted(n) then
+      local modded_setting = settings.global["planet-picker-modded-planets"]
+      local scan_modded = modded_setting and modded_setting.value
 
-  if settings.global["planet-picker-modded-planets"] then
-    for n, p in pairs(game.planets) do
-      if not find_in(PlanetSelect.planets, { name = n }) and not blacklisted(n) then
+      local sprite = "planet-picker-" .. n
+      if not helpers.is_valid_sprite_path(sprite) then
+        sprite = "unspecified-planet"
+      end
+
+      if find_in(PlanetSelect.vanilla_planets, { name = n }) then
+
+        local planet_setting = settings.global["planet-picker-" .. n]
+        local enabled = planet_setting and planet_setting.value == true
+
+        if enabled then
+          PlanetSelect.add_planet({
+            name = n,
+            tooltip = n:sub(1, 1):upper() .. n:sub(2),
+            icon = "planet-picker-" .. n,
+            surface = n,
+          })
+          if DEBUG then log("Planet " .. n .. " was added as a vanilla planet.") end
+        else
+          if DEBUG then log("Planet " .. n .. " was vanilla but was not enabled.") end
+        end
+      elseif find_in(PlanetSelect.api_planets, { name = n }) then
         PlanetSelect.add_planet({
           name = n,
-          tooltip = n:sub(1,1):upper()..n:sub(2),
-          icon = "planet-picker-"..n,
+          tooltip = n:sub(1, 1):upper() .. n:sub(2),
+          icon = "planet-picker-" .. n,
+          surface = n,
+        })
+        if DEBUG then log("Planet " .. n .. " was added as a modded planet.") end
+      elseif scan_modded then
+        PlanetSelect.add_planet({
+          name = n,
+          tooltip = n:sub(1, 1):upper() .. n:sub(2),
+          icon = "planet-picker-" .. n,
           surface = n,
           auto = true,
         })
+        if DEBUG then log("Planet " .. n .. " was automatically added with best-effort.") end
+      else
+        if DEBUG then log("Planet " .. n .. " was not found in either list.") end
       end
+    else
+      if DEBUG then log("Planet " .. n .. " was blacklisted and therefore skipped.") end
     end
   end
-
-  for _, planet in pairs(PlanetSelect.planets) do
-    PlanetSelect.enable_planet(planet.name)
-  end
 end
-
-PlanetSelect.progress = {}
 
 PlanetSelect.enable_planet = function(name)
+  if not game.planets[name].surface then
+    game.planets[name].create_surface()
+  end
   local radius = 5
-  game.planets[name].create_surface()
-  game.surfaces[name].request_to_generate_chunks({0, 0}, radius)
-  local area = (radius * 2 + 1) ^ 2
-  PlanetSelect.progress[name] = {
-    chunks = { generated = 0, total = area },
-    chart = { charted = 0, total = area }
-  }
+  game.surfaces[name].request_to_generate_chunks({ 0, 0 }, radius)
+  -- game.surfaces[name].force_generate_chunk_requests()
 end
 
----@param e EventData.on_chunk_generated
-function chunk_generated(e)
-  if not PlanetSelect.progress or not PlanetSelect.progress[e.surface.name] then return end
-  local progress = PlanetSelect.progress[e.surface.name].chunks
+-- function moved_surface(e)
+--   if e.player_index == nil or e.surface_index == nil then return end
+--   local player = game.players[e.player_index]
+--   if not player.controller_type == defines.controllers.character then return end
 
-  progress.generated = progress.generated + 1
-  GUI.progress(e.surface.name.."_gen", progress.generated / progress.total)
+--   local surface = player.surface
+--   local planet = PlanetSelect.planets[find_in(PlanetSelect.planets, { name = surface.name })]
 
-  if progress.generated == progress.total then
-    chart_starting_area(e.surface)
-  end
-end
+--   if planet ~= nil then
+--     -- Make sure the planet we're visiting is not hidden from the surface view.
+--     player.force.set_surface_hidden(surface, false);
+--     -- Make sure we unlock the tech for this planet.
+--     unlock_planet_technology(player.force, surface)
+--   end
+-- end
 
----@param e EventData.on_chunk_charted
-function chunk_charted(e)
-  local surface = game.surfaces[e.surface_index]
-  if not PlanetSelect.progress or not PlanetSelect.progress[surface.name] then return end
-  local progress = PlanetSelect.progress[surface.name].chart
-
-  progress.charted = progress.charted + 1
-  GUI.progress(surface.name.."_chart", progress.charted / progress.total)
-end
-script.on_event(defines.events.on_chunk_generated, chunk_generated)
-script.on_event(defines.events.on_chunk_charted, chunk_charted)
-
-function moved_surface(e)
-  if e.player_index == nil or e.surface_index == nil then return end
-  local player = game.players[e.player_index]
-  if not player.controller_type == defines.controllers.character then return end
-
-  local surface = player.surface
-  local planet = PlanetSelect.planets[find_in(PlanetSelect.planets, { name = surface.name })]
-
-  if planet ~= nil then
-    -- Make sure the planet we're visiting is not hidden from the surface view.
-    player.force.set_surface_hidden(surface, false);
-    -- Make sure we unlock the tech for this planet.
-    unlock_planet_technology(player.force, surface)
-  end
-end
-
-script.on_event(defines.events.on_player_changed_surface, moved_surface)
+-- script.on_event(defines.events.on_player_changed_surface, moved_surface)

@@ -220,13 +220,6 @@ _pp_blacklist = get_blacklist()
 
 function blacklisted(planet)
   local is_blacklisted = table_contains(_pp_blacklist, planet) ~= nil
-  -- dlog("Checking if "..planet.." is blacklisted: "..serpent.block(is_blacklisted))
+  -- if DEBUG then log("Checking if "..planet.." is blacklisted: "..serpent.block(is_blacklisted)) end
   return is_blacklisted
-end
-
-function dlog(message)
-  local nimph_present = game.players["Nimphious"] and true or false
-  if nimph_present then
-    log(message)
-  end
 end

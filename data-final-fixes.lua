@@ -53,7 +53,7 @@ end
 local blacklist = get_blacklist()
 
 for n,p in pairs(data.raw["planet"]) do
-  if p.starmap_icon ~= nil and p.starmap_icon_size ~= nil and not blacklisted(n) then
+  if p.starmap_icon and p.starmap_icon_size and not blacklisted(n) then
     data.extend({{
       type = "sprite",
       name = "planet-picker-"..n,

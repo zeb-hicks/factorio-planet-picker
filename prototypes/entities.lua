@@ -1,6 +1,7 @@
 require("utils.table")
 
 if settings.startup["planet-picker-modify-vulcanus-generator"] then
+  ---@type data.MiningDrillPrototype
   local vent = {
     type = "mining-drill",
     name = "thermal-vent",
@@ -10,6 +11,7 @@ if settings.startup["planet-picker-modify-vulcanus-generator"] then
     corpse = "big-remnants",
     minable = {mining_time = 1, result = "thermal-vent"},
     max_health = 300,
+    order = "t[thermal-vent]",
 
     collision_box = {{-1.2, -1.2}, {1.2, 1.2}},
     selection_box = {{-1.5, -1.5}, {1.5, 1.5}},

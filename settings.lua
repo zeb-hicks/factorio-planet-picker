@@ -4,56 +4,56 @@ data.extend({
     name = "planet-picker-modify-fulgora-ice",
     setting_type = "startup",
     default_value = true,
-    order = "f-b"
+    order = "f[fulgora]-a"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-fulgora-sulfur",
     setting_type = "startup",
     default_value = true,
-    order = "f-c"
+    order = "f[fulgora]-b"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-gleba-centrifugation",
     setting_type = "startup",
     default_value = true,
-    order = "g-a"
+    order = "g[gleba]-a"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-gleba-landfill",
     setting_type = "startup",
     default_value = true,
-    order = "g-a"
+    order = "g[gleba]-b"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-vulcanus-trees",
     setting_type = "startup",
     default_value = true,
-    order = "v-a"
+    order = "v[vulcanus]-a"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-vulcanus-plastic",
     setting_type = "startup",
     default_value = true,
-    order = "v-b"
+    order = "v[vulcanus]-b"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-vulcanus-generator",
     setting_type = "startup",
     default_value = true,
-    order = "v-c"
+    order = "v[vulcanus]-c"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-vulcanus-mining",
     setting_type = "startup",
     default_value = true,
-    order = "v-d"
+    order = "v[vulcanus]-d"
   }
 })
 
@@ -63,35 +63,35 @@ data.extend({
     name = "planet-picker-nauvis",
     setting_type = "runtime-global",
     default_value = true,
-    order = "p-a"
+    order = "p[planet-picker]-a"
   },
   {
     type = "bool-setting",
     name = "planet-picker-gleba",
     setting_type = "runtime-global",
     default_value = true,
-    order = "p-b"
+    order = "p[planet-picker]-b"
   },
   {
     type = "bool-setting",
     name = "planet-picker-fulgora",
     setting_type = "runtime-global",
     default_value = true,
-    order = "p-c"
+    order = "p[planet-picker]-c"
   },
   {
     type = "bool-setting",
     name = "planet-picker-vulcanus",
     setting_type = "runtime-global",
     default_value = true,
-    order = "p-d"
+    order = "p[planet-picker]-d"
   },
   {
     type = "bool-setting",
     name = "planet-picker-aquilo",
     setting_type = "runtime-global",
     default_value = false,
-    order = "p-e"
+    order = "p[planet-picker]-e"
   },
 })
 
@@ -101,14 +101,14 @@ data.extend({
     name = "planet-picker-modded-planets",
     setting_type = "runtime-global",
     default_value = false,
-    order = "p-z"
+    order = "p[planet-picker]-z-a"
   },
   {
     type = "string-setting",
     name = "planet-picker-blacklist",
     setting_type = "startup",
     default_value = "",
-    order = "z-z",
+    order = "p[planet-picker]-z-z",
     allow_blank = true,
   },
 })

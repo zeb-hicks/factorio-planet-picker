@@ -1,7 +1,7 @@
 function entity_built(e)
   local entity = e.entity
   if entity.name == "thermal-vent" then
-    dlog("Thermal vent generator built")
+    if DEBUG then log("Thermal vent generator built") end
     entity.surface.create_entity({name = "thermal-vent-generator", position = entity.position, force = entity.force})
   end
 end

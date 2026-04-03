@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.2
+Date: 2026-04-03
+  Changes:
+    - Changed the UI and scrolling behaviour to be better when many planets are available.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 2026-04-03
+  Bugfixes:
+    - Fixed missing fulgora tech setting (thanks Ethross)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Date: 2026-04-03
   Features:

@@ -1,17 +1,24 @@
 data.extend({
   {
     type = "bool-setting",
+    name = "planet-picker-modify-fulgora-ruins",
+    setting_type = "startup",
+    default_value = true,
+    order = "f-a"
+  },
+  {
+    type = "bool-setting",
     name = "planet-picker-modify-fulgora-ice",
     setting_type = "startup",
     default_value = true,
-    order = "f[fulgora]-a"
+    order = "f[fulgora]-b"
   },
   {
     type = "bool-setting",
     name = "planet-picker-modify-fulgora-sulfur",
     setting_type = "startup",
     default_value = true,
-    order = "f[fulgora]-b"
+    order = "f[fulgora]-c"
   },
   {
     type = "bool-setting",

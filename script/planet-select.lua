@@ -164,8 +164,13 @@ PlanetSelect.add_planet = function(options)
   PlanetSelect.enable_planet(options.name)
 end
 
+PlanetSelect.add_planet_remote = function(options)
+  table.insert(PlanetSelect.api_planets, options)
+  PlanetSelect.add_planet(options)
+end
+
 remote.add_interface("planet-picker", {
-  add_planet = PlanetSelect.add_planet
+  add_planet = PlanetSelect.add_planet_remote
 })
 
 PlanetSelect.reload_planets = function()

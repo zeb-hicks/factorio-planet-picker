@@ -6,30 +6,13 @@ function read_planets()
   for _, planet in pairs(PlanetSelect.planets) do
     if DEBUG then log("GUI.setup for "..planet.name) end
 
-    local bl = blacklisted(planet.name)
-    local planet_setting = settings.global["planet-picker-" .. planet.name]
-    local enabled = planet_setting and planet_setting.value == true
     local sprite = "planet-picker-" .. planet.name
     if not helpers.is_valid_sprite_path(sprite) then
       sprite = "unspecified-planet"
     end
-    local modded_setting = settings.global["planet-picker-modded-planets"]
-    local modded = modded_setting and modded_setting.value
-    local auto = planet.auto == true
 
-    local vanilla = not auto and enabled
-    local automod = not vanilla and modded and auto
-    local goodmod = not vanilla and not auto
-
-    if DEBUG then log("Planet setting: "..serpent.block(planet_setting)) end
-    if DEBUG then log("Add checks: "..serpent.line({bl, enabled, modded, auto})) end
-    if DEBUG then log("Compound: "..serpent.line({vanilla, automod, goodmod})) end
-    -- if not bl and ((enabled or (modded and auto)) or not auto) then
-    if not bl and (vanilla or automod or goodmod) then
-      if DEBUG then log("Adding planet") end
-      table.insert(planet_table,
-        { name = planet.name, sprite = sprite, tooltip = planet.name:sub(1, 1):upper() .. planet.name:sub(2) })
-    end
+    table.insert(planet_table,
+      { name = planet.name, sprite = sprite, tooltip = planet.name:sub(1, 1):upper() .. planet.name:sub(2) })
   end
 
   return planet_table
@@ -173,4 +156,12 @@ function gui_click(e)
   end
 end
 
+---@param e ConfigurationChangedData
+function config_changed(e)
+  for _, p in pairs(game.players) do
+    GUI.update(p)
+  end
+end
+
 script.on_event(defines.events.on_gui_click, gui_click)
+script.on_configuration_changed(config_changed)

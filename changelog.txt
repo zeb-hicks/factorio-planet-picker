@@ -1,4 +1,19 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 2026-04-03
+  Features:
+    - Complete redesign of the picker UI
+      - Picking a surface now requires more intent with a spawn button
+      - Surfaces have a live preview
+      - Player list for each surface (including offline players)
+  Changes:
+    - Improved the logic for setting up planets prior to selecting
+  Bugfixes:
+    - Several desynchronisation issues surrounding players joining at various stages fixed
+    - Fixed the logic for which planets appear in the picker
+    - Some fixes for the still incomplete remote API for planet mod authors
+    - Planet mods being removed will now force the UI to update for all players
+---------------------------------------------------------------------------------------------------
 Version: 0.5.2
 Date: 2026-04-02
   Features:

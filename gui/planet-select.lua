@@ -48,6 +48,10 @@ GUI.make_startup_window = function(player)
 
   local planets = read_planets()
 
+  if ui_store.selected_planet == nil then
+    ui_store.selected_planet = planets[1].name
+  end
+
   for _, planet in pairs(planets) do
     if planet.name == ui_store.selected_planet then
       planet_flow.add { type = "sprite-button", name = "pp_start_on_" .. planet.name, tooltip = planet.tooltip, style = "select_planet_button_current", sprite = planet.sprite }
@@ -71,7 +75,6 @@ GUI.make_startup_window = function(player)
   detail_frame.style.vertically_stretchable = true
 
   local detail_flow = detail_frame.add { type = "flow", name = "pp_detail_flow", direction = "vertical", style = "planet_picker_detail_frame" }
-
   build_planet_details(player, detail_flow, ui_store.selected_planet)
 
   local spawn_button = left_flow.add { type = "button", name = "pp_spawn_button", caption = "Spawn", style = "confirm_button" }
@@ -95,6 +98,8 @@ end
 
 GUI.update_startup_window = function(player)
   local ui_store = storage.ui[player.index]
+
+  if not ui_store.elements then return end
   ---@type UIStorageElements
   local elements = ui_store.elements
   local planets = read_planets()
@@ -114,6 +119,10 @@ GUI.update_startup_window = function(player)
 
   local post = elements.planet_flow.add { type = "empty-widget" }
   post.style.horizontally_stretchable = true
+
+  if ui_store.selected_planet == nil then
+    ui_store.selected_planet = planets[0]
+  end
 
   elements.detail_flow.clear()
   build_planet_details(player, elements.detail_flow, ui_store.selected_planet)
@@ -207,6 +216,7 @@ end
 
 ---@param e ConfigurationChangedData
 function config_changed(e)
+  setup_storage()
   for _, p in pairs(game.players) do
     GUI.update_startup_window(p)
   end

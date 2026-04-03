@@ -21,6 +21,8 @@ function init()
 
   if DEBUG then log("Setting up PlanetSelect") end
   PlanetSelect.setup_force()
+  if DEBUG then log("Setting up storage...") end
+  setup_storage()
   if DEBUG then log("Hiding Nauvis...") end
   game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
   if DEBUG then log("Done with init.") end
@@ -41,13 +43,10 @@ function player_created(e)
   local player = game.players[e.player_index]
   local character = player.character
   local items = collect_items_from(player)
-  storage.inventories = storage.inventories or {}
+
+  setup_storage()
   storage.inventories[player.index] = items
 
-  storage.ui = storage.ui or {}
-  storage.ui[e.player_index] = {
-    selected_planet = "nauvis"
-  }
   if DEBUG then log("Created player ui store:") end
   if DEBUG then log(serpent.block(storage.ui[e.player_index])) end
 

@@ -223,3 +223,13 @@ function blacklisted(planet)
   -- if DEBUG then log("Checking if "..planet.." is blacklisted: "..serpent.block(is_blacklisted)) end
   return is_blacklisted
 end
+
+function setup_storage()
+  storage.inventories = storage.inventories or {}
+  storage.ui = storage.ui or {}
+  for _, player in pairs(game.players) do
+    storage.inventories[player.index] = storage.inventories[player.index] or {}
+    storage.ui[player.index] = storage.ui[player.index] or {}
+    storage.ui[player.index].selected_planet = "nauvis"
+  end
+end

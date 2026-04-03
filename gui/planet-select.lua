@@ -19,16 +19,25 @@ function read_planets()
 end
 
 ---@param player LuaPlayer
-GUI.make_startup_window = GUI.make_startup_window or function(player)
+GUI.make_startup_window = function(player)
   if DEBUG then log("GUI.make_startup_window for "..player.name) end
   -- GUI.setup(PlanetSelect.planets)
   local gui = player.gui.center
   local frame = gui.add { type = "frame", name = "pp_startup_window", caption = "Choose a Planet", style = "frame" } -- TODO: Localise
+  frame.style.left_margin = 16
+  frame.style.right_margin = 16
+  frame.style.natural_width = 1000
+  frame.style.maximal_width = 1000
 
   local main_flow = frame.add { type = "flow", name = "pp_main-flow", direction = "vertical", style = "planet_picker_main_frame" }
 
-  local planet_flow = main_flow.add { type = "flow", name = "pp_startup_planet_flow", direction = "horizontal" }
-  planet_flow.style.horizontally_stretchable = true
+  local planet_scroller = main_flow.add { type = "scroll-pane" }
+  planet_scroller.vertical_scroll_policy = "never"
+  planet_scroller.horizontal_scroll_policy = "always"
+  -- planet_scroller.style.extra_bottom_padding_when_activated = 8
+  -- planet_scroller.style.bottom_padding = 12
+
+  local planet_flow = planet_scroller.add { type = "flow", name = "pp_startup_planet_flow", direction = "horizontal" }
 
   local pre = planet_flow.add { type = "empty-widget" }
   pre.style.horizontally_stretchable = true
@@ -71,6 +80,46 @@ GUI.make_startup_window = GUI.make_startup_window or function(player)
   local game_planet = game.planets[ui_store.selected_planet]
   local surf_index = game_planet.surface.index
   local view = preview_frame.add { type = "camera", name = "pp_remote_view", style = "planet_picker_remote_view", surface_index = surf_index, position = { 0, 0 }, zoom = 0.25 }
+
+  storage.ui[player.index].elements = {
+    planet_flow = planet_flow,
+    detail_flow = detail_flow,
+    view = view
+  }
+end
+
+---@class UIStorageElements
+---@field planet_flow LuaGuiElement
+---@field detail_flow LuaGuiElement
+---@field view LuaGuiElement
+
+GUI.update_startup_window = function(player)
+  local ui_store = storage.ui[player.index]
+  ---@type UIStorageElements
+  local elements = ui_store.elements
+  local planets = read_planets()
+
+  elements.planet_flow.clear()
+
+  local pre = elements.planet_flow.add { type = "empty-widget" }
+  pre.style.horizontally_stretchable = true
+
+  for _, planet in pairs(planets) do
+    if planet.name == ui_store.selected_planet then
+      elements.planet_flow.add { type = "sprite-button", name = "pp_start_on_" .. planet.name, tooltip = planet.tooltip, style = "select_planet_button_current", sprite = planet.sprite }
+    else
+      elements.planet_flow.add { type = "sprite-button", name = "pp_start_on_" .. planet.name, tooltip = planet.tooltip, style = "select_planet_button", sprite = planet.sprite }
+    end
+  end
+
+  local post = elements.planet_flow.add { type = "empty-widget" }
+  post.style.horizontally_stretchable = true
+
+  elements.detail_flow.clear()
+  build_planet_details(player, elements.detail_flow, ui_store.selected_planet)
+
+  local planet = game.planets[ui_store.selected_planet]
+  elements.view.surface_index = planet.surface.index
 end
 
 ---@param player LuaPlayer
@@ -117,7 +166,7 @@ function add_detail(flow, caption)
   label.style.horizontally_stretchable = true
 end
 
-GUI.close_startup_window = GUI.close_startup_window or function(player)
+GUI.close_startup_window = function(player)
   if DEBUG then log("GUI.close_startup_window for "..player.name) end
   ---@type LuaGuiElement
   local gui = player.gui.center
@@ -126,7 +175,7 @@ GUI.close_startup_window = GUI.close_startup_window or function(player)
   end
 end
 
-GUI.update = function(player)
+GUI.rebuild = function(player)
   if DEBUG then log("GUI.update for "..player.name) end
   if player and player.gui and player.gui.center.pp_startup_window then
     GUI.close_startup_window(player)
@@ -147,7 +196,7 @@ function gui_click(e)
 
   if clicked_planet ~= nil then
     ui_store.selected_planet = clicked_planet
-    GUI.update(player)
+    GUI.update_startup_window(player)
   end
 
   if clicked_start then
@@ -159,7 +208,7 @@ end
 ---@param e ConfigurationChangedData
 function config_changed(e)
   for _, p in pairs(game.players) do
-    GUI.update(p)
+    GUI.update_startup_window(p)
   end
 end
 

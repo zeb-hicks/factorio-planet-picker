@@ -12,9 +12,12 @@ styles.select_planet_button = {
   disabled_graphical_set = table.deepcopy(styles.big_slot_button.disabled_graphical_set),
   horizontal_align = "center",
 }
+styles.select_planet_button.hovered_graphical_set.glow = nil
 
 styles.select_planet_button_current = table.deepcopy(styles.select_planet_button)
 styles.select_planet_button_current.default_graphical_set = table.deepcopy(styles.big_slot_button.hovered_graphical_set)
+styles.select_planet_button_current.hovered_graphical_set.glow = nil
+styles.select_planet_button_current.default_graphical_set.glow = nil
 
 styles.planet_picker_remote_view = {
   type = "camera_style",
@@ -44,5 +47,3 @@ styles.planet_loading_bar = {
   parent = "progressbar",
   width = 256,
 }
-
-styles.select_planet_button.hovered_graphical_set.glow = nil

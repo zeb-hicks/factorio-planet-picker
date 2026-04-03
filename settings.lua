@@ -4,7 +4,7 @@ data.extend({
     name = "planet-picker-modify-fulgora-ruins",
     setting_type = "startup",
     default_value = true,
-    order = "f-a"
+    order = "f[fulgora]-a"
   },
   {
     type = "bool-setting",

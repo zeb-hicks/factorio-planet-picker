@@ -30,7 +30,7 @@ end
 function settings_changed(e)
   if DEBUG then log("Settings changed") end;
   if e.player_index ~= nil then
-    GUI.update(game.players[e.player_index])
+    GUI.rebuild(game.players[e.player_index])
   end
 end
 

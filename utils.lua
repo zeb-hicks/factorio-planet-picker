@@ -218,15 +218,16 @@ end
 
 _pp_blacklist = get_blacklist()
 
+--- Check if a planet is blacklisted.
 function blacklisted(planet)
   local is_blacklisted = table_contains(_pp_blacklist, planet) ~= nil
-  -- if DEBUG then log("Checking if "..planet.." is blacklisted: "..serpent.block(is_blacklisted)) end
   return is_blacklisted
 end
 
+--- Ensure each player's storage is initialized.
 function setup_storage()
-  storage.inventories = storage.inventories or {}
-  storage.ui = storage.ui or {}
+  storage.inventories = nilc({storage.inventories, {}})
+  storage.ui = nilc({storage.ui, {}})
   PlanetSelect.reload_planets()
   local planet = ""
   for _,p in pairs(PlanetSelect.planets) do
@@ -234,8 +235,27 @@ function setup_storage()
     break
   end
   for _, player in pairs(game.players) do
-    storage.inventories[player.index] = storage.inventories[player.index] or {}
-    storage.ui[player.index] = storage.ui[player.index] or {}
-    storage.ui[player.index].selected_planet = planet
+    storage.inventories[player.index] = nilc({storage.inventories[player.index], {}})
+    storage.ui[player.index] = nilc({storage.ui[player.index], {}})
+    storage.ui[player.index].selected_planet = nilc({storage.ui[player.index].selected_planet, planet})
   end
+end
+
+---@param v any[] Array of values to nil coalesce
+---@return any
+function nilc(v)
+  for i=1,#v do
+    if v[i] ~= nil then
+      return v[i]
+    end
+  end
+  error("Tried to coalesce nil values but could not find a non-nil value to return.")
+end
+
+---@param text string A name formatted like "some-name" or "some_name"
+---@return string text The name changed to read like "Some Name"
+function human_readable_name(text)
+  local name = text:gsub("%-", " "):gsub("%_", " ")
+  name = name:gsub("(%w)(%w*)", function(first, rest) return first:upper() .. rest end)
+  return name
 end

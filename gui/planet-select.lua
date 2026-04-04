@@ -24,6 +24,7 @@ GUI.make_startup_window = function(player)
   -- GUI.setup(PlanetSelect.planets)
   local gui = player.gui.center
   local frame = gui.add { type = "frame", name = "pp_startup_window", caption = "Choose a Planet", style = "frame" } -- TODO: Localise
+  frame.style.use_header_filler = false
   frame.style.left_margin = 16
   frame.style.right_margin = 16
   frame.style.natural_width = 1000
@@ -35,9 +36,10 @@ GUI.make_startup_window = function(player)
   planet_scroller.vertical_scroll_policy = "never"
   planet_scroller.horizontal_scroll_policy = "always"
   -- planet_scroller.style.extra_bottom_padding_when_activated = 8
-  -- planet_scroller.style.bottom_padding = 12
 
   local planet_flow = planet_scroller.add { type = "flow", name = "pp_startup_planet_flow", direction = "horizontal" }
+  planet_flow.style.natural_width = 1
+  planet_flow.style.horizontally_squashable = true
 
   local pre = planet_flow.add { type = "empty-widget" }
   pre.style.horizontally_stretchable = true
@@ -77,11 +79,20 @@ GUI.make_startup_window = function(player)
   local detail_flow = detail_frame.add { type = "flow", name = "pp_detail_flow", direction = "vertical", style = "planet_picker_detail_frame" }
   build_planet_details(player, detail_flow, ui_store.selected_planet)
 
-  local spawn_button = left_flow.add { type = "button", name = "pp_spawn_button", caption = "Spawn", style = "confirm_button" }
+  local filler = detail_flow.add { type = "empty-widget" }
+  filler.style.vertically_stretchable = true
+
+  local spawn_button = left_flow.add { type = "button", name = "pp_spawn_button", caption = "Spawn", style = "confirm_button", enabled = false }
   spawn_button.style.horizontally_stretchable = true
 
   local game_planet = game.planets[ui_store.selected_planet]
-  local surf_index = game_planet.surface.index
+
+  local surf_index = game.surfaces["empty_void"].index
+  if game_planet then
+    surf_index = game_planet.surface.index
+    spawn_button.enabled = true
+  end
+
   local view = preview_frame.add { type = "camera", name = "pp_remote_view", style = "planet_picker_remote_view", surface_index = surf_index, position = { 0, 0 }, zoom = 0.25 }
 
   storage.ui[player.index].elements = {
@@ -120,12 +131,11 @@ GUI.update_startup_window = function(player)
   local post = elements.planet_flow.add { type = "empty-widget" }
   post.style.horizontally_stretchable = true
 
-  if ui_store.selected_planet == nil then
-    ui_store.selected_planet = planets[0]
-  end
-
   elements.detail_flow.clear()
   build_planet_details(player, elements.detail_flow, ui_store.selected_planet)
+
+  local filler = elements.detail_flow.add { type = "empty-widget" }
+  filler.style.vertically_stretchable = true
 
   local planet = game.planets[ui_store.selected_planet]
   elements.view.surface_index = planet.surface.index
@@ -148,24 +158,25 @@ function build_planet_details(player, flow, planet)
 
   local surface = game.get_surface(planet)
   local current_players = 0
+  local forces = {}
   local players = {}
   if surface ~= nil then
+    for _,f in pairs(game.forces) do
+
+    end
     for k,p in pairs(game.players) do
       if p.surface_index == surface.index then
         current_players = current_players + 1
         table.insert(players, p.name)
       end
     end
+
+    add_detail(details_list, "Current players: "..current_players)
+
+    for _,p in pairs(players) do
+      add_detail(details_list, p)
+    end
   end
-
-  add_detail(details_list, "Current players: "..current_players)
-
-  for _,p in pairs(players) do
-    add_detail(details_list, p)
-  end
-
-  local filler = flow.add { type = "empty-widget" }
-  filler.style.vertically_stretchable = true
 end
 
 ---@param flow LuaGuiElement

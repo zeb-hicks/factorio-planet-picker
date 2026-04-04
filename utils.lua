@@ -227,9 +227,15 @@ end
 function setup_storage()
   storage.inventories = storage.inventories or {}
   storage.ui = storage.ui or {}
+  PlanetSelect.reload_planets()
+  local planet = ""
+  for _,p in pairs(PlanetSelect.planets) do
+    planet = p.name
+    break
+  end
   for _, player in pairs(game.players) do
     storage.inventories[player.index] = storage.inventories[player.index] or {}
     storage.ui[player.index] = storage.ui[player.index] or {}
-    storage.ui[player.index].selected_planet = "nauvis"
+    storage.ui[player.index].selected_planet = planet
   end
 end

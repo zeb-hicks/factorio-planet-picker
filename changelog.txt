@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.0
+Date: 2026-04-05
+  Features:
+    - Forces now show up in the planet details when previewing a planet.
+    - Players now appear in the planet details list, with a darker name if they're offline.
+  Changes:
+    - Altered the scroll behaviour and apperance of the planet picker.
+    - The selected planet now remains selected when the mod configuration is changed.
+  Bugfixes:
+    - Fixed a crash when loading a save file where the UI was malformed or outdated.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: 2026-04-03
   Bugfixes:

@@ -1,0 +1,1 @@
+magick -background none disconnected.svg \( +clone -resize 64x64 \) \( +clone -resize 32x32 \) \( +clone -resize 16x16 \) -delete 0 +append ../graphics/icons/disconnected.png

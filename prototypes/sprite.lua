@@ -5,7 +5,7 @@ data.extend({
     filename = "__planet-picker__/graphics/icons/nauvis.png",
     size = 512,
     scale = 1.0,
-    priority = "high",
+    priority = "no-atlas",
   },
   {
     type = "sprite",
@@ -13,7 +13,7 @@ data.extend({
     filename = "__planet-picker__/graphics/icons/gleba.png",
     size = 512,
     scale = 1.0,
-    priority = "high",
+    priority = "no-atlas",
   },
   {
     type = "sprite",
@@ -21,7 +21,7 @@ data.extend({
     filename = "__planet-picker__/graphics/icons/fulgora.png",
     size = 512,
     scale = 1.0,
-    priority = "high",
+    priority = "no-atlas",
   },
   {
     type = "sprite",
@@ -29,7 +29,7 @@ data.extend({
     filename = "__planet-picker__/graphics/icons/vulcanus.png",
     size = 512,
     scale = 1.0,
-    priority = "high",
+    priority = "no-atlas",
   },
   {
     type = "sprite",
@@ -37,7 +37,7 @@ data.extend({
     filename = "__planet-picker__/graphics/icons/aquilo.png",
     size = 512,
     scale = 1.0,
-    priority = "high",
+    priority = "no-atlas",
   },
   {
     type = "sprite",
@@ -45,6 +45,14 @@ data.extend({
     filename = "__planet-picker__/graphics/icons/unspecified-planet.png",
     size = 512,
     scale = 1.0,
-    priority = "high",
+    priority = "no-atlas",
+  },
+  {
+    type = "sprite",
+    name = "planet-picker-disconnected",
+    filename = "__planet-picker__/graphics/icons/disconnected.png",
+    size = 64,
+    scale = 1.0,
+    priority = "medium",
   }
 })

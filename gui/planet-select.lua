@@ -1,11 +1,9 @@
+--- Grabs the planets from the PlanetSelect class and sanitises the sprites for the GUI.
 function read_planets()
-  if DEBUG then log("GUI.setup") end
   PlanetSelect.reload_planets()
-  if DEBUG then log(serpent.block(PlanetSelect.planets)) end
   local planet_table = {}
   for _, planet in pairs(PlanetSelect.planets) do
-    if DEBUG then log("GUI.setup for "..planet.name) end
-
+    -- If we haven't generated a valid sprite for this planet, use the placeholder.
     local sprite = "planet-picker-" .. planet.name
     if not helpers.is_valid_sprite_path(sprite) then
       sprite = "unspecified-planet"
@@ -236,12 +234,17 @@ function build_planet_details(player, flow, planet)
       local g = game.players[p].color.g
       local b = game.players[p].color.b
       local dot = "[color=" .. r .. "," .. g .. "," .. b .. "]●[/color] "
-      local pname = p
-      if not game.players[p].connected then
-        pname = "[color=0.5,0.5,0.5]" .. pname .. "[/color]"
-      end
-      local label = details_list.add { type = "label", caption = dot .. pname }
+      local set = details_list.add { type = "flow", direction = "horizontal" }
+      local label = set.add { type = "label", caption = dot .. p }
       label.style.left_padding = 8
+      if not game.players[p].connected then
+        label.caption = "[color=0.5,0.5,0.5]" .. label.caption .. "[/color]"
+        local icon = set.add { type = "sprite", sprite = "planet-picker-disconnected" }
+        icon.style.size = { 12, 12 }
+        icon.style.stretch_image_to_widget_size = true
+        icon.style.vertical_align = "center"
+        icon.style.margin = 4
+      end
     end
   end
 end

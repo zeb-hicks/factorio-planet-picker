@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.1
+Date: 2026-04-06
+  Features:
+    - Added a disconnected icon for players in the planet details list who are currently offline.
+    - Made the UI update dynamically as players move around between planets.
+  Changes:
+    - Added the "requires space travel" flag to the info.json so the mod correctly shows up as a Space Age mod.
+  Bugfixes:
+    - Fixed a bug where the remote view might not update correctly if an invalid or no planet was selected.
+    - Fixed the UI update logic potentially breaking if a player's UI was in an invalid state while not visible.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.0
 Date: 2026-04-05
   Features:

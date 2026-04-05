@@ -97,6 +97,17 @@ function find_in(table, key)
   return nil
 end
 
+function reduce(table, fn, acc)
+  for k, v in pairs(table) do
+    if acc == nil then
+      acc = v
+    else
+      acc = fn(acc, v)
+    end
+  end
+  return acc
+end
+
 function remove_dependency(tech, dependency)
   local tech = data.raw.technology[tech]
   local index = find_in(tech.prerequisites, dependency)

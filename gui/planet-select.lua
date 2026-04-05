@@ -48,10 +48,6 @@ GUI.make_startup_window = function(player)
   planet_flow.style.natural_width = 1
   planet_flow.style.horizontally_squashable = true
 
-  -- Left padding to center the planets.
-  local pre = planet_flow.add { type = "empty-widget" }
-  pre.style.horizontally_stretchable = true
-
   local ui_store = storage.ui[player.index]
 
   local planets = read_planets()
@@ -71,6 +67,10 @@ GUI.make_startup_window = function(player)
   if ui_store.selected_planet == nil and #planets > 0 then
     ui_store.selected_planet = planets[1].name
   end
+
+  -- Left padding to center the planets.
+  local pre = planet_flow.add { type = "empty-widget" }
+  pre.style.horizontally_stretchable = true
 
   -- Add the planet buttons.
   for _, planet in pairs(planets) do
@@ -143,22 +143,35 @@ end
 ---@field view LuaGuiElement
 
 --- Dynamically update the state of the player's UI
+---@param player LuaPlayer
 GUI.update_startup_window = function(player)
-  local ui_store = storage.ui[player.index]
+  -- If the player doesn't have the picker visible then we don't need to update it.
+  if player.gui.center.pp_startup_window == nil then return end
 
+  local ui_store = storage.ui[player.index]
   if not ui_store.elements then return end
+
   ---@type UIStorageElements
   local elements = ui_store.elements
   local planets = read_planets()
 
+  -- Make sure the UI elements we need are still valid, if not rebuild the entire UI.
+  local valid = reduce(elements, function(acc, element) return acc and element.valid end, true)
+  if not valid then
+    GUI.rebuild(player)
+  end
+
   elements.planet_flow.clear()
 
-  local pre = elements.planet_flow.add { type = "empty-widget" }
-  pre.style.horizontally_stretchable = true
-
+  -- Show the no planets error if there are no planets, else show the planets.
   elements.planet_container.visible = #planets > 0
   elements.no_planet_error.visible = #planets == 0
 
+  -- Left padding to center the planets.
+  local pre = elements.planet_flow.add { type = "empty-widget" }
+  pre.style.horizontally_stretchable = true
+
+  -- Add the planet buttons.
   for _, planet in pairs(planets) do
     if planet.name == ui_store.selected_planet then
       elements.planet_flow.add { type = "sprite-button", name = "pp_start_on_" .. planet.name, tooltip = planet.tooltip, style = "select_planet_button_current", sprite = planet.sprite }
@@ -167,19 +180,26 @@ GUI.update_startup_window = function(player)
     end
   end
 
+  -- Right padding to center the planets.
   local post = elements.planet_flow.add { type = "empty-widget" }
   post.style.horizontally_stretchable = true
 
+  -- Clear and rebuild the planet details list.
   elements.detail_flow.clear()
   build_planet_details(player, elements.detail_flow, ui_store.selected_planet)
 
   local filler = elements.detail_flow.add { type = "empty-widget" }
   filler.style.vertically_stretchable = true
 
-  local planet = game.planets[ui_store.selected_planet]
-  elements.view.surface_index = planet.surface.index
+  -- Update the remote view to the selected planet.
+  local game_planet = game.planets[ui_store.selected_planet]
+  local surf_index = game.surfaces["empty_void"].index
+  if game_planet then
+    surf_index = game_planet.surface.index
+    elements.spawn_button.enabled = true
+  end
 
-  elements.spawn_button.enabled = ui_store.selected_planet ~= ""
+  elements.view.surface_index = surf_index
 end
 
 --- Add the detail items to the planet detail pane

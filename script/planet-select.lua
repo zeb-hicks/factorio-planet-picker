@@ -237,20 +237,14 @@ PlanetSelect.enable_planet = function(name)
   -- game.surfaces[name].force_generate_chunk_requests()
 end
 
--- function moved_surface(e)
---   if e.player_index == nil or e.surface_index == nil then return end
---   local player = game.players[e.player_index]
---   if not player.controller_type == defines.controllers.character then return end
+function trigger_update(e)
+  for _, player in pairs(game.players) do
+    GUI.update_startup_window(player)
+  end
+end
 
---   local surface = player.surface
---   local planet = PlanetSelect.planets[find_in(PlanetSelect.planets, { name = surface.name })]
-
---   if planet ~= nil then
---     -- Make sure the planet we're visiting is not hidden from the surface view.
---     player.force.set_surface_hidden(surface, false);
---     -- Make sure we unlock the tech for this planet.
---     unlock_planet_technology(player.force, surface)
---   end
--- end
-
--- script.on_event(defines.events.on_player_changed_surface, moved_surface)
+script.on_event(defines.events.on_player_joined_game, trigger_update)
+script.on_event(defines.events.on_player_left_game, trigger_update)
+script.on_event(defines.events.on_player_changed_surface, trigger_update)
+script.on_event(defines.events.on_player_changed_force, trigger_update)
+script.on_event(defines.events.on_player_respawned, trigger_update)

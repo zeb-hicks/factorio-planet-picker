@@ -93,9 +93,7 @@ function research_finished(e)
 end
 
 script.on_init(init)
--- script.on_event(defines.events.on_game_created_from_scenario, init)
 script.on_event(defines.events.on_tick, tick)
 script.on_event(defines.events.on_player_created, player_created)
--- script.on_event(defines.events.on_player_joined_game, player_joined)
 script.on_event(defines.events.on_runtime_mod_setting_changed, settings_changed)
 script.on_event(defines.events.on_research_finished, research_finished)

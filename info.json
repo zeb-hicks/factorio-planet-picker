@@ -11,5 +11,6 @@
     "base >= 2.0",
     "space-age >= 2.0",
     "?quality >= 2.0"
-  ]
+  ],
+  "space_travel_required": true
 }

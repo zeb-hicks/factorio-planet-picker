@@ -108,7 +108,28 @@ data.extend({
     name = "planet-picker-modded-planets",
     setting_type = "runtime-global",
     default_value = false,
-    order = "p[planet-picker]-z-a"
+    order = "z-a"
+  },
+  {
+    type = "bool-setting",
+    name = "planet-picker-chat",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "z-b"
+  },
+  {
+    type = "bool-setting",
+    name = "planet-picker-chat-see-other-forces",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "z-b"
+  },
+  {
+    type = "bool-setting",
+    name = "planet-picker-chat-speak-other-forces",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "z-b"
   },
   {
     type = "string-setting",

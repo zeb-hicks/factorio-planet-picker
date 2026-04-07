@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.2
+Date: 2026-04-08
+  Features:
+    - Added the ability to chat during planet select without using /shout or /whisper
+  Changes:
+    - Altered the sort order of some mod settings
+  Bugfixes:
+    - Fixed planet selector not updating for all players when a mod setting was changed.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.1
 Date: 2026-04-06
   Features:

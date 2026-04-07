@@ -30,9 +30,8 @@ end
 
 ---@param e EventData.on_runtime_mod_setting_changed
 function settings_changed(e)
-  if DEBUG then log("Settings changed") end;
-  if e.player_index ~= nil then
-    GUI.rebuild(game.players[e.player_index])
+  for _, player in pairs(game.players) do
+    GUI.rebuild(player)
   end
 end
 
@@ -92,8 +91,52 @@ function research_finished(e)
   end
 end
 
+---@param e EventData.on_console_chat
+function chat(e)
+  -- Exit early if the chat setting is disabled.
+  if not settings.global["planet-picker-chat"].value then return end
+
+  if e.player_index == nil then return end
+  ---@type LuaPlayer
+  local player = game.players[e.player_index]
+  if player == nil then return end
+
+  -- This player is still picking a planet.
+  local player_picking = player.force.name == "picking_planet"
+
+  for _, other in pairs(game.players) do
+    -- This player is the same as the one who sent the message.
+    local same_player = player.name == other.name
+    -- The other player is picking their planet.
+    local other_picking = other.force.name == "picking_planet"
+    -- The setting to speak to other players in the picker is enabled.
+    local see_other_chats = settings.global["planet-picker-chat-see-other-forces"].value == true
+    -- The setting to see messages from other players that have already picked is enabled.
+    local speak_to_others = settings.global["planet-picker-chat-speak-other-forces"].value == true
+
+    if player_picking then
+      -- Send message from a player in the picker to other players, if the setting is enabled.
+      if not same_player and not other_picking and speak_to_others then
+        other.print(player.name .. " (" .. human_readable_name(player.force.name) .. "): " .. e.message)
+      end
+    else
+      -- Send message to a player in the picker from any other player, if the setting is enabled.
+      if not same_player and other_picking and see_other_chats then
+        local location = "Unknown Location"
+        if player.surface.planet ~= nil then
+          location = human_readable_name(player.surface.planet.name)
+        elseif player.surface.name ~= nil then
+          location = human_readable_name(player.surface.name)
+        end
+        other.print(player.name .. " (" .. human_readable_name(player.force.name) .. " on " .. location .. "): " .. e.message)
+      end
+    end
+  end
+end
+
 script.on_init(init)
 script.on_event(defines.events.on_tick, tick)
 script.on_event(defines.events.on_player_created, player_created)
 script.on_event(defines.events.on_runtime_mod_setting_changed, settings_changed)
 script.on_event(defines.events.on_research_finished, research_finished)
+script.on_event(defines.events.on_console_chat, chat)

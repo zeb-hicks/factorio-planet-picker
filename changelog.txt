@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.3
+Date: 2026-04-20
+  Bugfixes:
+    - Fixed Nauvis not properly being hidden from the space navigation map.
+    - Fixed Nauvis surface and space location not being properly revealed when researching Nauvis discovery.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.2
 Date: 2026-04-08
   Features:

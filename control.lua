@@ -25,6 +25,7 @@ function init()
   setup_storage()
   if DEBUG then log("Hiding Nauvis...") end
   game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
+  game.forces.player.lock_space_location("nauvis");
   if DEBUG then log("Done with init.") end
 end
 
@@ -88,6 +89,10 @@ function research_finished(e)
   if e.research.name == "calcite-processing" then
     e.research.force.technologies["calcite-trigger"].researched = true
     e.research.force.technologies["calcite-trigger"].enabled = false
+  end
+  if e.research.name == "planet-discovery-nauvis" then
+    e.research.force.set_surface_hidden("nauvis", false);
+    e.research.force.unlock_space_location("nauvis");
   end
 end
 

@@ -21,8 +21,6 @@ function init()
 
   if DEBUG then log("Setting up PlanetSelect") end
   PlanetSelect.setup_force()
-  if DEBUG then log("Setting up storage...") end
-  setup_storage()
   if DEBUG then log("Hiding Nauvis...") end
   game.forces.player.set_surface_hidden(game.surfaces.nauvis, true)
   game.forces.player.lock_space_location("nauvis");

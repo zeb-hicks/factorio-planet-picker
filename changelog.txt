@@ -1,4 +1,17 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.5
+Date: 2026-05-30
+  Features:
+    - Added workaround for planets with non-standard discovery technology names (thanks zhuyifei1999)
+  Bugfixes:
+    - Removed early planet checks that spawned a planet's surface before another mod might have had
+      the chance to listen for the event depending on mod load order. (thanks zhuyifei1999)
+---------------------------------------------------------------------------------------------------
+Version: 1.1.4
+Date: 2026-05-19
+  Bugfixes:
+    - Fixed small bug in planet name matching for the GUI
+---------------------------------------------------------------------------------------------------
 Version: 1.1.3
 Date: 2026-04-20
   Bugfixes:
@@ -116,7 +129,8 @@ Date: 2024-11-15
 Version: 0.4.1
 Date: 2024-11-15
   Bugfixes:
-    - Fixed a loading issue where the chunks loaded would not be the same as chunks queued for generation
+    - Fixed a loading issue where the chunks loaded would not be the same as chunks queued for
+      generation
 ---------------------------------------------------------------------------------------------------
 Version: 0.4.0
 Date: 2024-11-14
@@ -127,7 +141,8 @@ Date: 2024-11-14
   Features:
     - Added a remote interface for adding custom planets to the planet picker
     - Planets can now be toggled without having to start a new save
-    - Added a new loading UI for pregenerating the planets to prevent unexpected lag when loading in for the first time
+    - Added a new loading UI for pregenerating the planets to prevent unexpected lag when loading
+      in for the first time
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.2
 Date: 2024-11-12
@@ -144,11 +159,14 @@ Date: 2024-11-12
 Version: 0.3.0
 Date: 2024-11-12
   Features:
-    - Added settings for customizing what changes should be made. It's now possible to disable all changes and simply enable the planet select screen, allowing you to use other mods to modify the bootstrapping on other planets however you like.
+    - Added settings for customizing what changes should be made. It's now possible to disable all
+      changes and simply enable the planet select screen, allowing you to use other mods to modify
+      the bootstrapping on other planets however you like.
   Changes:
     - Added a new Acid Processing technology to replace Oil Processing on Vulcanus
     - Moved the Chemical Plant and Refinery unlocks to the Fluid Handling technology
-    - Removed steel from and adjusted the Thermal Vent recipe since it's no longer needed anywhere else
+    - Removed steel from and adjusted the Thermal Vent recipe
+      since it's no longer needed anywhere else
     - Removed the carbon steel smelting chain and alternate recipes as they're no longer necessary
   Bugfixes:
     - Fixed some issues with the patching of the oil dependency technology

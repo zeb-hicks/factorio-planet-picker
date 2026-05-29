@@ -299,7 +299,7 @@ end
 
 function gui_click(e)
   local force = game.forces.player
-  local clicked_planet = e.element.name:match("pp_start%_on%_(%w+)")
+  local clicked_planet = e.element.name:match("pp_start%_on%_(.+)")
   local clicked_start = e.element.name == "pp_spawn_button"
 
   local player = game.players[e.player_index]

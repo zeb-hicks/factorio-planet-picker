@@ -180,7 +180,18 @@ end
 function unlock_planet_technology(force, surface)
   local name = "planet-discovery-"..surface.name
   local tech = force.technologies[name]
-  if tech then tech.researched = true end
+  if tech then
+    tech.researched = true
+  else
+    for name, tech in pairs(force.technologies) do
+      for _, effect in ipairs(tech.prototype.effects) do
+        if effect.type == "unlock-space-location" and effect.space_location == surface.name then
+          tech.researched = true
+          return
+        end
+      end
+    end
+  end
 end
 
 function nil_chain(table, ...)
